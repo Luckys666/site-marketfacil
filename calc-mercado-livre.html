@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Preços para Mercado Livre</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -18,26 +18,27 @@
     <main class="mf-calc">
         <header class="mf-header">
             <h1>Calculadora de Preços para <span>Mercado Livre</span></h1>
-            <button id="theme-toggle" class="btn-theme" title="Alternar tema">🌙</button>
         </header>
 
         <!-- CONFIGURAÇÕES GLOBAIS -->
         <section class="mf-section mf-global">
             <h2>⚙️ Configurações Globais</h2>
             <div class="mf-grid-2">
-                <div class="mf-field">
+                <div class="mf-field" title="Faturamento bruto estimado para calcular o rateio correto.">
                     <label>Faturamento Mensal (R$)</label>
                     <input type="number" id="global-revenue" value="100" step="0.01">
                 </div>
-                <div class="mf-field">
+                <div class="mf-field"
+                    title="Todos os custos fixos mensais do negócio (Aluguel, Sistemas, Pró-labore, etc).">
                     <label>Custos Fixos (R$)</label>
                     <input type="number" id="global-fixed-cost" value="10" step="0.01">
                 </div>
-                <div class="mf-field">
+                <div class="mf-field" title="Soma das alíquotas de imposto da empresa (Simples Nacional, ICMS, etc).">
                     <label>Impostos (%)</label>
                     <input type="number" id="global-tax" value="10" step="0.5">
                 </div>
-                <div class="mf-field">
+                <div class="mf-field"
+                    title="Percentual que o Custo Fixo representa em relação ao Faturamento (Rateio automático).">
                     <label>Custo Operacional (%)</label>
                     <input type="text" id="global-op-cost" value="10,00%" disabled>
                 </div>
@@ -50,6 +51,12 @@
                 <input type="checkbox" id="advanced-mode">
                 <span class="toggle-slider"></span>
                 Modo Avançado
+            </label>
+            <label class="toggle-advanced"
+                title="Destacar em vermelho os campos que não atingem a meta ideal (Custo Op < 10%, Contribuição > 20%, Lucro > 10%)">
+                <input type="checkbox" id="recommendations-mode">
+                <span class="toggle-slider"></span>
+                Recomendações Marketfacil
             </label>
             <button id="btn-export" class="btn-export">📥 Exportar CSV</button>
             <button id="btn-add-product" class="btn-add mf-advanced">+ Adicionar Produto</button>
@@ -74,19 +81,36 @@
                 <div class="inputs-section">
                     <!-- Linha 1: SKU, Custo, Taxas -->
                     <div class="inputs-row">
-                        <div class="mf-field field-sku">
+                        <div class="mf-field field-sku" title="Identificador único para seu produto">
                             <label>SKU</label>
                             <input type="text" class="input-sku" value="ABC">
                         </div>
-                        <div class="mf-field field-cost">
+                        <div class="mf-field field-cost" title="Custo de aquisição do produto junto ao fornecedor">
                             <label>Custo (R$)</label>
                             <input type="number" class="input-cost" value="14" step="0.01">
                         </div>
-                        <div class="mf-field">
+                        <div class="mf-field"
+                            title="Taxa cobrada pelo nível do anúncio. Ex: Clássico (11%), Premium (16%).">
                             <label>Taxa Mercado Livre (%)</label>
                             <input type="number" class="input-ml" value="16" step="0.5">
                         </div>
-                        <div class="mf-field">
+                    </div>
+                    <!-- Linha 2: Envios, Pesos e Custos -->
+                    <div class="inputs-row">
+                        <div class="mf-field field-category"
+                            title="Se o seu produto se enquadrar em uma destas categorias específicas, a regra de Frete e repasse muda. Caso contrário, deixe no Padrão.">
+                            <label>Tabela de Custos de Envio</label>
+                            <select class="input-category">
+                                <option value="default">Geral / Padrão</option>
+                                <option value="full_super">Supermercado (Full)</option>
+                                <option value="livros">Livros</option>
+                                <option value="especiais">Obras de Arte e Especiais</option>
+                                <option value="pets">Alimento para Pets</option>
+                                <option value="usados">Usados ou Grátis</option>
+                                <option value="custom">Personalizado (Digitar valor)</option>
+                            </select>
+                        </div>
+                        <div class="mf-field" title="Peso do pacote completo para cotação do Mercado Envios">
                             <label>Peso</label>
                             <select class="input-weight">
                                 <option value="weight_0.3">Até 300g</option>
@@ -117,28 +141,40 @@
                                 <option value="weight_100">90kg a 100kg</option>
                                 <option value="weight_125">100kg a 125kg</option>
                                 <option value="weight_150">125kg a 150kg</option>
-                                <option value="weight_inf">Mais de 150kg</option>
+                                <option value="weight_inf">Mais de 150 kg</option>
                             </select>
                         </div>
-                        <div class="mf-field">
+                        <div class="mf-field field-custom-freight mf-hidden"
+                            title="Digite o valor fixo desejado para o frete">
+                            <label>Valor Frete (R$)</label>
+                            <input type="number" class="input-custom-freight" value="0" step="0.01">
+                        </div>
+                        <div class="mf-field"
+                            title="Custo de envio assumido pelo vendedor (automático via peso e preço)">
                             <label>Custo de Envio (R$)</label>
                             <input type="text" class="input-frete" value="0,00" disabled>
                         </div>
-                        <div class="mf-field mf-advanced">
+                        <div class="mf-field mf-advanced field-tacos"
+                            title="Total Advertising Cost of Sale - Investimento percentual em Mercado Ads sobre a venda">
                             <label>Gasto com Ads (TACOS %)</label>
-                            <input type="number" class="input-tacos" value="0" step="0.1">
+                            <div class="tacos-input-wrapper">
+                                <input type="number" class="input-tacos" value="0" step="0.1">
+                                <span class="ads-cta-btn" onclick="openAdsModal()"
+                                    title="Otimize seus anúncios e aumente seu lucro!">🔥 Otimizar Ads</span>
+                            </div>
                         </div>
                     </div>
-                    <!-- Linha 2: Margem -->
+                    <!-- Linha 3: Margem -->
                     <div class="inputs-row">
-                        <div class="mf-field field-margin">
+                        <div class="mf-field field-margin" title="Margem de lucro líquido desejada sobre o faturamento">
                             <label>Margem de Lucro (%)</label>
                             <div class="margin-inline">
                                 <input type="range" class="input-margin-slider" min="0" max="60" step="0.5" value="10">
                                 <input type="number" class="input-margin" value="10" step="0.5">
                             </div>
                         </div>
-                        <div class="mf-field field-contrib">
+                        <div class="mf-field field-contrib"
+                            title="Percentual que sobra após custos variáveis (Produto, Comissões, Impostos) para pagar os Custos Fixos.">
                             <label>Margem de Contribuição</label>
                             <input type="text" class="output-contrib" value="0%" disabled>
                         </div>
@@ -149,33 +185,72 @@
 
                 <!-- DIREITA: Resultados (vertical) -->
                 <div class="results-section">
-                    <div class="result-box result-price">
+                    <div class="result-box result-price"
+                        title="Preço final ideal a ser anunciado (Pode ser alterado para fazer cálculos reversos)">
                         <label>💰 PREÇO DE VENDA</label>
                         <input type="text" class="input-price" placeholder="0,00">
                     </div>
-                    <div class="result-box result-profit">
+                    <div class="result-box result-profit"
+                        title="Lucro Líquido final na venda desta unidade (Pode ser alterado para inverter o cálculo)">
                         <label>✅ LUCRO</label>
                         <input type="text" class="input-profit" placeholder="0,00">
                     </div>
-                    <div class="result-box result-roi mf-advanced">
-                        <label>📈 ROI</label>
-                        <input type="text" class="output-roi" value="0%" disabled>
+                    <div class="result-box result-roi mf-advanced"
+                        title="Retorno sobre o Investimento - Lucro / Custo do Produto (Pode ser alterado para achar o Preço via ROI)">
+                        <label>📈 ROI (%)</label>
+                        <input type="number" class="input-roi" value="0" step="1">
                     </div>
                 </div>
             </div>
 
             <!-- NERDS (OCULTO) -->
             <div class="nerds-row mf-hidden">
-                <div class="nerd-item"><span>Comissão R$</span><strong class="output-commission-val">-</strong></div>
-                <div class="nerd-item"><span>Comissão %</span><strong class="output-commission-perc">-</strong></div>
-                <div class="nerd-item"><span>Impostos R$</span><strong class="output-taxes-val">-</strong></div>
-                <div class="nerd-item"><span>Lucro Bruto</span><strong class="output-gross">-</strong></div>
-                <div class="nerd-item"><span>Bruto-Imp.</span><strong class="output-gross-after-tax">-</strong></div>
-                <div class="nerd-item"><span>Custo Op.</span><strong class="output-op-cost">-</strong></div>
+                <div class="nerd-item" title="Soma da Taxa ML + Custo de Envio (Mercado Envios)"><span>Comissão
+                        R$</span><strong class="output-commission-val">-</strong></div>
+                <div class="nerd-item"
+                    title="Percentual real pago ao Mercado Livre (Taxa ML + Envio) pelo preço da venda"><span>Comissão
+                        %</span><strong class="output-commission-perc">-</strong></div>
+                <div class="nerd-item" title="Custo dos impostos estatais ou DAS sobre essa venda"><span>Impostos
+                        R$</span><strong class="output-taxes-val">-</strong></div>
+                <div class="nerd-item" title="Preço da Venda - Custo - Total pago ao ML (Comissão + Frete)"><span>Lucro
+                        Bruto</span><strong class="output-gross">-</strong></div>
+                <div class="nerd-item" title="Lucro Bruto - Impostos - Custos de Publicidade (TACOS)"><span>Lucro após
+                        Imp.</span><strong class="output-gross-after-tax">-</strong>
+                </div>
+                <div class="nerd-item" title="Valor do Preço cobrindo sua folha e custos fixos estipulados via Rateio">
+                    <span>Rateio Custo Fixo</span><strong class="output-op-cost">-</strong>
+                </div>
             </div>
         </article>
     </template>
 
+    <!-- Modal Promocional do Curso Marketfacil Ads -->
+    <div id="mf-ads-modal" class="mf-modal-overlay">
+        <div class="mf-modal-content">
+            <button class="mf-modal-close" onclick="closeAdsModal()">✕</button>
+            <div class="mf-modal-header">
+                <h3>🚀 Escale com <span>Ads Fácil</span></h3>
+            </div>
+            <div class="mf-modal-body">
+                <p><strong>Domine as ferramentas de anúncios pagos no Mercado Livre.</strong></p>
+                <p
+                    style="font-family: 'Inter', sans-serif; color: var(--primary); font-size: 14px; font-weight: 700; text-transform: uppercase; margin-top: -15px; margin-bottom: 24px; letter-spacing: 0.5px;">
+                    🎥 Curso Gravado e 100% Atualizado</p>
+                <div class="mf-modal-highlight-box">
+                    <ul class="mf-modal-benefits">
+                        <li><span class="hotmart-check">✔</span> Estratégias simples e eficientes</li>
+                        <li><span class="hotmart-check">✔</span> Product Ads e Brand Ads para Mercado Livre</li>
+                        <li><span class="hotmart-check">✔</span> Otimização de campanhas focada em rentabilidade</li>
+                        <li><span class="hotmart-check">✔</span> Conheça os erros comuns que consomem sua verba</li>
+                    </ul>
+                </div>
+                <a href="https://hotmart.com/pt-br/marketplace/produtos/ads-facil/V99746396J" target="_blank"
+                    class="mf-modal-cta">Quero Otimizar Meus Anúncios Agora</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT -->
     <script src="js/calc-mercado-livre.js"></script>
 </body>
 

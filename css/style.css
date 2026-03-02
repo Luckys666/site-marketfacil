@@ -28,25 +28,6 @@
     --radius: 12px;
 }
 
-body.dark {
-    --bg: #0b1121;
-    --bg-card: rgba(30, 41, 59, 0.7);
-    --bg-input: #0f172a;
-    --border: #334155;
-    --border-focus: #818cf8;
-    --primary: #818cf8;
-    --primary-light: rgba(129, 140, 248, 0.15);
-    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
-    --success: #34d399;
-    --success-light: rgba(52, 211, 153, 0.15);
-    --text: #f8fafc;
-    --text-muted: #94a3b8;
-    --text-label: #cbd5e1;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.2);
-}
 
 .mf-calc,
 .mf-calc * {
@@ -158,7 +139,117 @@ body {
     .mf-grid-2,
     .mf-grid-3,
     .mf-grid-4 {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
+        gap: 6px !important;
+    }
+
+    .mf-section {
+        padding: 16px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .mf-field {
+        gap: 2px !important;
+        /* Extremely tight label-to-input space */
+    }
+
+    .mf-field label {
+        font-size: 13px !important;
+        margin-bottom: 0 !important;
+    }
+
+    /* Fields and Card Padding Resizing for Mobile */
+    .product-card {
+        padding: 16px 12px;
+    }
+
+    .card-layout {
+        flex-direction: column;
+        gap: 16px;
+        /* Reduced from 20px */
+    }
+
+    .inputs-section {
+        gap: 8px;
+        /* Extremely tight stack for mobile */
+    }
+
+    .mf-calc input[type="text"],
+    .mf-calc input[type="number"],
+    .mf-calc select.input-category,
+    .mf-calc select.input-weight {
+        padding: 8px 10px !important;
+        font-size: 14px;
+        height: 38px;
+        /* Force uniform shorter height */
+    }
+
+    .inputs-row {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        /* Extremely tight gap */
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .inputs-row .mf-field {
+        flex: none !important;
+        width: 100% !important;
+        margin-bottom: 0 !important;
+    }
+
+    /* Modal Shrinkage for Mobile */
+    .mf-modal-content {
+        padding: 16px 16px 20px 16px !important;
+        /* Absolute minimal padding */
+        width: 100%;
+        margin: 10px;
+        /* Safe area */
+        max-height: 80vh !important;
+        /* Squeeze tight and force scroll if needed */
+        overflow-y: auto !important;
+    }
+
+    .mf-modal-header h3 {
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
+
+    .mf-modal-body p {
+        font-size: 15px;
+        margin-bottom: 16px;
+    }
+
+    .mf-modal-highlight-box {
+        padding: 16px;
+        margin-bottom: 24px;
+    }
+
+    .mf-modal-benefits li {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .mf-modal-cta {
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    /* Make Ads Button Bouncy on Mobile (Not giant) */
+    .tacos-input-wrapper input.input-tacos {
+        padding-right: 125px !important;
+        /* Revert to moderate space */
+    }
+
+    .ads-cta-btn {
+        font-size: 11px !important;
+        /* Revert to smaller text */
+        padding: 6px 10px !important;
+        /* Revert to smaller button */
+        right: 4px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 12px rgba(255, 69, 0, 0.5) !important;
     }
 }
 
@@ -177,6 +268,7 @@ body {
 
 .mf-calc input[type="text"],
 .mf-calc input[type="number"],
+.mf-calc select.input-category,
 .mf-calc select.input-weight {
     background: var(--bg-input) !important;
     border: 1px solid var(--border) !important;
@@ -192,12 +284,14 @@ body {
     color-scheme: light dark;
 }
 
+.mf-calc select.input-category option,
 .mf-calc select.input-weight option {
     background: var(--bg-card);
     color: var(--text);
 }
 
 .mf-calc input:focus,
+.mf-calc select.input-category:focus,
 .mf-calc select.input-weight:focus {
     outline: none;
     border-color: var(--border-focus) !important;
@@ -743,6 +837,38 @@ body.advanced .field-profit input {
 }
 
 /* =========================================
+   RECOMMENDATIONS WARNING (MARKETFACIL)
+   ========================================= */
+body.recommendations-active .mf-warning input {
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    background-color: rgba(239, 68, 68, 0.05) !important;
+    box-shadow: 0 0 0 1px var(--danger) inset !important;
+}
+
+body.recommendations-active .result-box.mf-warning {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2) !important;
+}
+
+body.recommendations-active .result-box.mf-warning::before {
+    background: var(--danger-gradient) !important;
+}
+
+body.recommendations-active .result-box.mf-warning label {
+    color: var(--danger) !important;
+}
+
+body.recommendations-active .result-box.mf-warning input {
+    color: var(--danger) !important;
+    background: var(--danger-gradient) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* =========================================
    RESPONSIVIDADE (TABLETS E CELULARES)
    ========================================= */
 
@@ -797,6 +923,255 @@ body.advanced .field-profit input {
     .nerds-row {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+/* =========================================
+   ADS FÁCIL CTA & MODAL
+   ========================================= */
+
+.tacos-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.tacos-input-wrapper input.input-tacos {
+    width: 100%;
+    padding-right: 110px;
+    /* Space for the button */
+    -moz-appearance: textfield;
+    /* Remove arrows */
+    appearance: textfield;
+    /* Standard property */
+}
+
+.tacos-input-wrapper input.input-tacos::-webkit-outer-spin-button,
+.tacos-input-wrapper input.input-tacos::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.ads-cta-btn {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #ff4500, #ff8c00);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255, 69, 0, 0.4);
+    animation: pulse-fire 2s infinite;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    z-index: 5;
+}
+
+.ads-cta-btn:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 69, 0, 0.6);
+}
+
+@keyframes pulse-fire {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7);
+        transform: translateY(-50%) scale(1);
+    }
+
+    20% {
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(255, 69, 0, 0);
+        transform: translateY(-50%) scale(1);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 69, 0, 0);
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+.mf-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mf-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.mf-modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 95%;
+    /* Responsive width */
+    max-width: 600px;
+    /* Wider modal */
+    padding: 40px;
+    max-height: 90vh;
+    /* Prevent overflowing screen height */
+    overflow-y: auto;
+    /* Scroll inside modal if needed */
+    box-sizing: border-box;
+    /* Prevent padding from breaking width */
+    /* More breathing room */
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mf-modal-overlay.active .mf-modal-content {
+    transform: translateY(0);
+}
+
+.mf-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.mf-modal-close:hover {
+    color: var(--danger);
+}
+
+.mf-modal-header h3 {
+    font-size: 28px;
+    /* Larger title */
+    font-weight: 800;
+    margin-bottom: 20px;
+    font-family: 'Outfit', sans-serif;
+    text-align: center;
+    /* Center title */
+}
+
+.mf-modal-header h3 span {
+    background: linear-gradient(135deg, #ff4500, #ff8c00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.mf-modal-body p {
+    font-size: 18px;
+    /* Texto maior para melhor leitura */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* Match Hotmart serif style */
+    color: var(--text);
+    margin-bottom: 24px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.mf-modal-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mf-modal-highlight-box {
+    background: rgba(255, 69, 0, 0.04);
+    border: 1px dashed rgba(255, 100, 0, 0.6);
+    /* Stronger orange dash like Hotmart */
+    border-radius: 8px;
+    /* Slightly sharper corners like Hotmart */
+    padding: 24px;
+    /* Reduced from 28px for mobile */
+    margin: 0 auto 32px auto;
+    width: 100%;
+    /* Better for mobile */
+    max-width: 500px;
+}
+
+.mf-modal-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    width: fit-content;
+    /* Centers the whole block of left-aligned items */
+}
+
+.mf-modal-benefits li {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* Serif for list too */
+    font-size: 17px;
+    /* Aumentado de 15px para 17px */
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.mf-modal-benefits li:last-child {
+    margin-bottom: 0;
+}
+
+.hotmart-check {
+    color: #5d36b8;
+    /* Rich purple color from Hotmart mockups */
+    font-size: 16px;
+    font-weight: 900;
+    font-family: sans-serif;
+    /* Keep checkmark sans-serif so it shows up cleanly */
+    margin-top: 1px;
+}
+
+.mf-modal-cta {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    /* Prevent padding from breaking width */
+    text-align: center;
+    padding: 16px;
+    /* Bigger button */
+    background: linear-gradient(135deg, #ff4500, #ff8c00);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    /* Smoother curve */
+    font-weight: 700;
+    font-size: 18px;
+    /* Larger font */
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mf-modal-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 69, 0, 0.5);
+    color: white;
+    /* Ensure text stays white */
 }
 
 @media (max-width: 480px) {
