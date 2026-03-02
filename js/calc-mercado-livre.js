@@ -269,6 +269,10 @@ class Calculator {
         return rev > 0 ? fixed / rev : 0;
     }
 
+    recalculateAll() {
+        this.products.forEach(p => p.calculate('margin'));
+    }
+
     updateOpCost() {
         const rate = this.getOpCostRate() * 100;
         this.globalOpCost.value = this.fmtPerc(rate);
