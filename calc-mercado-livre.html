@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Preços para Mercado Livre</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <main class="mf-calc">
+        <header class="mf-header">
+            <h1>Calculadora de Preços para <span>Mercado Livre</span></h1>
+            <button id="theme-toggle" class="btn-theme" title="Alternar tema">🌙</button>
+        </header>
+
+        <!-- CONFIGURAÇÕES GLOBAIS -->
+        <section class="mf-section mf-global">
+            <h2>⚙️ Configurações Globais</h2>
+            <div class="mf-grid-2">
+                <div class="mf-field">
+                    <label>Faturamento Mensal (R$)</label>
+                    <input type="number" id="global-revenue" value="100" step="0.01">
+                </div>
+                <div class="mf-field">
+                    <label>Custos Fixos (R$)</label>
+                    <input type="number" id="global-fixed-cost" value="10" step="0.01">
+                </div>
+                <div class="mf-field">
+                    <label>Impostos (%)</label>
+                    <input type="number" id="global-tax" value="10" step="0.5">
+                </div>
+                <div class="mf-field">
+                    <label>Custo Operacional (%)</label>
+                    <input type="text" id="global-op-cost" value="10,00%" disabled>
+                </div>
+            </div>
+        </section>
+
+        <!-- AÇÕES -->
+        <section class="mf-actions-bar">
+            <label class="toggle-advanced">
+                <input type="checkbox" id="advanced-mode">
+                <span class="toggle-slider"></span>
+                Modo Avançado
+            </label>
+            <button id="btn-export" class="btn-export">📥 Exportar CSV</button>
+            <button id="btn-add-product" class="btn-add mf-advanced">+ Adicionar Produto</button>
+        </section>
+
+        <!-- PRODUTO -->
+        <section class="mf-section mf-product">
+            <div id="products-container">
+                <!-- Products injected here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- TEMPLATE DO PRODUTO -->
+    <template id="product-template">
+        <article class="product-card">
+            <!-- Botão Remover no canto -->
+            <button class="btn-remove mf-advanced" title="Remover Produto">×</button>
+
+            <div class="card-layout">
+                <!-- ESQUERDA: Inputs -->
+                <div class="inputs-section">
+                    <!-- Linha 1: SKU, Custo, Taxas -->
+                    <div class="inputs-row">
+                        <div class="mf-field field-sku">
+                            <label>SKU</label>
+                            <input type="text" class="input-sku" value="ABC">
+                        </div>
+                        <div class="mf-field field-cost">
+                            <label>Custo (R$)</label>
+                            <input type="number" class="input-cost" value="14" step="0.01">
+                        </div>
+                        <div class="mf-field">
+                            <label>ML (%)</label>
+                            <input type="number" class="input-ml" value="16" step="0.5">
+                        </div>
+                        <div class="mf-field">
+                            <label>Peso</label>
+                            <select class="input-weight">
+                                <option value="weight_0.3">Até 300g</option>
+                                <option value="weight_0.5">300g a 500g</option>
+                                <option value="weight_1">500g a 1kg</option>
+                                <option value="weight_1.5">1kg a 1.5kg</option>
+                                <option value="weight_2">1.5kg a 2kg</option>
+                                <option value="weight_3">2kg a 3kg</option>
+                                <option value="weight_4">3kg a 4kg</option>
+                                <option value="weight_5">4kg a 5kg</option>
+                                <option value="weight_6">5kg a 6kg</option>
+                                <option value="weight_7">6kg a 7kg</option>
+                                <option value="weight_8">7kg a 8kg</option>
+                                <option value="weight_9">8kg a 9kg</option>
+                                <option value="weight_11">9kg a 11kg</option>
+                                <option value="weight_13">11kg a 13kg</option>
+                                <option value="weight_15">13kg a 15kg</option>
+                                <option value="weight_17">15kg a 17kg</option>
+                                <option value="weight_20">17kg a 20kg</option>
+                                <option value="weight_25">20kg a 25kg</option>
+                                <option value="weight_30">25kg a 30kg</option>
+                                <option value="weight_40">30kg a 40kg</option>
+                                <option value="weight_50">40kg a 50kg</option>
+                                <option value="weight_60">50kg a 60kg</option>
+                                <option value="weight_70">60kg a 70kg</option>
+                                <option value="weight_80">70kg a 80kg</option>
+                                <option value="weight_90">80kg a 90kg</option>
+                                <option value="weight_100">90kg a 100kg</option>
+                                <option value="weight_125">100kg a 125kg</option>
+                                <option value="weight_150">125kg a 150kg</option>
+                                <option value="weight_inf">Mais de 150kg</option>
+                            </select>
+                        </div>
+                        <div class="mf-field">
+                            <label>Envio/Op (R$)</label>
+                            <input type="text" class="input-frete" value="0,00" disabled>
+                        </div>
+                        <div class="mf-field mf-advanced">
+                            <label>TACOS (%)</label>
+                            <input type="number" class="input-tacos" value="0" step="0.1">
+                        </div>
+                    </div>
+                    <!-- Linha 2: Margem -->
+                    <div class="inputs-row">
+                        <div class="mf-field field-margin">
+                            <label>Margem (%)</label>
+                            <div class="margin-inline">
+                                <input type="range" class="input-margin-slider" min="0" max="60" step="0.5" value="10">
+                                <input type="number" class="input-margin" value="10" step="0.5">
+                            </div>
+                        </div>
+                        <div class="mf-field field-contrib">
+                            <label>Contrib.</label>
+                            <input type="text" class="output-contrib" value="0%" disabled>
+                        </div>
+                        <button class="btn-nerds mf-advanced" title="Detalhes">📊</button>
+                    </div>
+                </div>
+
+                <!-- DIREITA: Resultados (vertical) -->
+                <div class="results-section">
+                    <div class="result-box result-price">
+                        <label>💰 PREÇO DE VENDA</label>
+                        <input type="text" class="input-price" placeholder="0,00">
+                    </div>
+                    <div class="result-box result-profit">
+                        <label>✅ LUCRO</label>
+                        <input type="text" class="input-profit" placeholder="0,00">
+                    </div>
+                    <div class="result-box result-roi mf-advanced">
+                        <label>📈 ROI</label>
+                        <input type="text" class="output-roi" value="0%" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NERDS (OCULTO) -->
+            <div class="nerds-row mf-hidden">
+                <div class="nerd-item"><span>Comissão R$</span><strong class="output-commission-val">-</strong></div>
+                <div class="nerd-item"><span>Comissão %</span><strong class="output-commission-perc">-</strong></div>
+                <div class="nerd-item"><span>Impostos R$</span><strong class="output-taxes-val">-</strong></div>
+                <div class="nerd-item"><span>Lucro Bruto</span><strong class="output-gross">-</strong></div>
+                <div class="nerd-item"><span>Bruto-Imp.</span><strong class="output-gross-after-tax">-</strong></div>
+                <div class="nerd-item"><span>Custo Op.</span><strong class="output-op-cost">-</strong></div>
+            </div>
+        </article>
+    </template>
+
+    <script src="js/calc-mercado-livre.js"></script>
+</body>
+
+</html>
