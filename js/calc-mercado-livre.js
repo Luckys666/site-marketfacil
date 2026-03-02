@@ -218,7 +218,7 @@ class Product {
         if (btnNerds && nerdsRow) {
             btnNerds.addEventListener('click', () => {
                 nerdsRow.classList.toggle('mf-hidden');
-                btnNerds.textContent = nerdsRow.classList.contains('mf-hidden') ? '📊' : '✕';
+                btnNerds.innerHTML = nerdsRow.classList.contains('mf-hidden') ? 'Cálculos para Nerds 📊' : 'Fechar Cálculos ✕';
             });
         }
     }
