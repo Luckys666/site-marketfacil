@@ -891,8 +891,9 @@ body {
    ========================================= */
 .mf-calc.recommendations-active .mf-healthy input,
 .mf-calc.recommendations-active .mf-healthy select {
-    border-color: var(--success) !important;
-    background-color: rgba(16, 185, 129, 0.05) !important;
+    border: 2px solid var(--success) !important;
+    color: var(--success) !important;
+    background-color: rgba(16, 185, 129, 0.15) !important;
 }
 
 .mf-calc.recommendations-active .result-box.mf-healthy {
