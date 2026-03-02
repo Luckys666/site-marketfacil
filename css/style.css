@@ -481,8 +481,13 @@ body.advanced .btn-nerds.mf-advanced {
     color: var(--primary);
 }
 
-.mf-calc .result-price input {
-    color: var(--primary) !important;
+.mf-calc .result-price input,
+.mf-calc .result-price input:disabled {
+    background: var(--primary-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
 }
 
 /* Profit Box */
@@ -500,8 +505,13 @@ body.advanced .btn-nerds.mf-advanced {
     color: var(--success);
 }
 
-.mf-calc .result-profit input {
-    color: var(--success) !important;
+.mf-calc .result-profit input,
+.mf-calc .result-profit input:disabled {
+    background: var(--success-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
 }
 
 /* ROI Box */
@@ -519,8 +529,13 @@ body.advanced .btn-nerds.mf-advanced {
     color: var(--roi);
 }
 
-.result-roi input {
-    color: var(--roi);
+.mf-calc .result-roi input,
+.mf-calc .result-roi input:disabled {
+    background: var(--roi-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
 }
 
 /* FIELD SIZES */
