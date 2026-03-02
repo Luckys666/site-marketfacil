@@ -280,8 +280,10 @@ class Calculator {
         // Marketfacil recommendation: Op Cost <= 10%
         if (rate > 10.01) {
             this.globalOpCost.parentElement.classList.add('mf-warning');
+            this.globalOpCost.parentElement.classList.remove('mf-healthy');
         } else {
             this.globalOpCost.parentElement.classList.remove('mf-warning');
+            this.globalOpCost.parentElement.classList.add('mf-healthy');
         }
     }
 
@@ -587,17 +589,23 @@ class Product {
         // Contrib >= 20% (ajustado para precisão decimal)
         if (contribRate < 0.1999) {
             this.outputContrib.parentElement.classList.add('mf-warning');
+            this.outputContrib.parentElement.classList.remove('mf-healthy');
         } else {
             this.outputContrib.parentElement.classList.remove('mf-warning');
+            this.outputContrib.parentElement.classList.add('mf-healthy');
         }
 
         // Profit Margin >= 10%
         if (marginRate < 0.0999) {
             this.inputProfit.closest('.result-box').classList.add('mf-warning');
             this.inputMargin.closest('.mf-field').classList.add('mf-warning');
+            this.inputProfit.closest('.result-box').classList.remove('mf-healthy');
+            this.inputMargin.closest('.mf-field').classList.remove('mf-healthy');
         } else {
             this.inputProfit.closest('.result-box').classList.remove('mf-warning');
             this.inputMargin.closest('.mf-field').classList.remove('mf-warning');
+            this.inputProfit.closest('.result-box').classList.add('mf-healthy');
+            this.inputMargin.closest('.mf-field').classList.add('mf-healthy');
         }
     }
 

@@ -887,6 +887,20 @@ body.recommendations-active .mf-calc .result-box.mf-warning input {
 }
 
 /* =========================================
+   RECOMMENDATIONS HEALTHY (MARKETFACIL)
+   ========================================= */
+body.recommendations-active .mf-calc .mf-healthy input,
+body.recommendations-active .mf-calc .mf-healthy select {
+    border-color: var(--success) !important;
+    background-color: rgba(16, 185, 129, 0.02) !important;
+}
+
+body.recommendations-active .mf-calc .result-box.mf-healthy {
+    border-color: var(--success) !important;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* =========================================
    RESPONSIVIDADE (TABLETS E CELULARES)
    ========================================= */
 
