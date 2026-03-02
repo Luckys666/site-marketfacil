@@ -856,27 +856,28 @@ body.advanced .field-profit input {
 /* =========================================
    RECOMMENDATIONS WARNING (MARKETFACIL)
    ========================================= */
-body.recommendations-active .mf-warning input {
+body.recommendations-active .mf-calc .mf-warning input,
+body.recommendations-active .mf-calc .mf-warning select {
     border-color: var(--danger) !important;
     color: var(--danger) !important;
     background-color: rgba(239, 68, 68, 0.05) !important;
     box-shadow: 0 0 0 1px var(--danger) inset !important;
 }
 
-body.recommendations-active .result-box.mf-warning {
+body.recommendations-active .mf-calc .result-box.mf-warning {
     border-color: var(--danger) !important;
     box-shadow: 0 0 20px rgba(239, 68, 68, 0.2) !important;
 }
 
-body.recommendations-active .result-box.mf-warning::before {
+body.recommendations-active .mf-calc .result-box.mf-warning::before {
     background: var(--danger-gradient) !important;
 }
 
-body.recommendations-active .result-box.mf-warning label {
+body.recommendations-active .mf-calc .result-box.mf-warning label {
     color: var(--danger) !important;
 }
 
-body.recommendations-active .result-box.mf-warning input {
+body.recommendations-active .mf-calc .result-box.mf-warning input {
     color: var(--danger) !important;
     background: var(--danger-gradient) !important;
     -webkit-background-clip: text !important;
