@@ -383,6 +383,16 @@ class Product {
 }
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    new Calculator();
-});
+const initCalculator = () => {
+    if (document.getElementById('products-container') && !window.mfCalcInitialized) {
+        window.mfCalcInitialized = true;
+        new Calculator();
+    }
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCalculator);
+} else {
+    // DOM já carregou, executa direto! Importante para WordPress.
+    initCalculator();
+}
