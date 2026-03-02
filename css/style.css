@@ -148,10 +148,17 @@ body {
     gap: 12px;
 }
 
+.mf-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
 @media (max-width: 600px) {
 
     .mf-grid-2,
-    .mf-grid-3 {
+    .mf-grid-3,
+    .mf-grid-4 {
         grid-template-columns: 1fr 1fr;
     }
 }
@@ -175,9 +182,9 @@ select.input-weight {
     background: var(--bg-input);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 14px 16px;
-    font-size: 16px;
-    font-weight: 600;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-weight: 500;
     color: var(--text);
     width: 100%;
     transition: all 0.25s ease;
@@ -345,25 +352,26 @@ body.advanced .btn-nerds.mf-advanced {
     border-color: var(--primary-light);
 }
 
-/* Botão Remover - canto superior direito */
+/* Botão Remover - canto superior direito (agora flutuando por fora) */
 .product-card>.btn-remove {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
+    top: -12px;
+    right: -12px;
+    width: 28px;
+    height: 28px;
     border: 1px solid var(--border);
-    background: var(--bg-input);
+    background: var(--bg-card);
     border-radius: 50%;
-    font-size: 18px;
-    font-weight: 300;
+    font-size: 16px;
+    font-weight: 600;
     color: var(--text-muted);
     cursor: pointer;
     transition: all 0.25s ease;
-    z-index: 10;
+    z-index: 20;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: var(--shadow-md);
 }
 
 .product-card>.btn-remove:hover {
@@ -391,8 +399,12 @@ body.advanced .btn-nerds.mf-advanced {
 .inputs-row {
     display: flex;
     align-items: flex-end;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
+}
+
+.inputs-row .mf-field {
+    flex: 1 1 150px;
 }
 
 /* RIGHT: Results Section - Vertical Stack */
