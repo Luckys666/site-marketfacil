@@ -451,14 +451,15 @@ body.advanced .btn-nerds.mf-advanced {
 }
 
 .result-box input {
-    font-size: 38px;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 800;
-    text-align: center;
-    border: none;
-    background: transparent;
-    padding: 0;
-    width: 100%;
+    font-size: 38px !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-shadow: none !important;
 }
 
 .result-box input:focus {
@@ -480,8 +481,8 @@ body.advanced .btn-nerds.mf-advanced {
     color: var(--primary);
 }
 
-.result-price input {
-    color: var(--primary);
+.mf-calc .result-price input {
+    color: var(--primary) !important;
 }
 
 /* Profit Box */
@@ -499,8 +500,8 @@ body.advanced .btn-nerds.mf-advanced {
     color: var(--success);
 }
 
-.result-profit input {
-    color: var(--success);
+.mf-calc .result-profit input {
+    color: var(--success) !important;
 }
 
 /* ROI Box */
@@ -663,8 +664,10 @@ body.advanced .field-profit input {
 }
 
 .margin-inline input[type="number"] {
-    width: 60px;
+    width: 75px !important;
     text-align: center;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
 }
 
 /* BUTTONS */
