@@ -188,17 +188,18 @@ class Calculator {
         // Advanced Mode toggle
         const advancedToggle = document.getElementById('advanced-mode');
         advancedToggle.addEventListener('change', () => {
-            document.body.classList.toggle('advanced', advancedToggle.checked);
+            document.querySelector('.mf-calc').classList.toggle('advanced', advancedToggle.checked);
         });
 
         // Recommendations Mode toggle
         const recToggle = document.getElementById('recommendations-mode');
         if (recToggle) {
             // Apply initial state if already checked
-            document.body.classList.toggle('recommendations-active', recToggle.checked);
+            document.querySelector('.mf-calc').classList.toggle('recommendations-active', recToggle.checked);
 
             recToggle.addEventListener('change', () => {
-                document.body.classList.toggle('recommendations-active', recToggle.checked);
+                document.querySelector('.mf-calc').classList.toggle('recommendations-active', recToggle.checked);
+                this.updateOpCost();   // Force visual update on global inputs
                 this.recalculateAll(); // Force visual update on all products
             });
         }
@@ -285,10 +286,6 @@ class Calculator {
             this.globalOpCost.parentElement.classList.remove('mf-warning');
             this.globalOpCost.parentElement.classList.add('mf-healthy');
         }
-    }
-
-    recalculateAll() {
-        this.products.forEach(p => p.calculate('margin'));
     }
 
     addProduct() {

@@ -400,17 +400,17 @@ body {
     display: none !important;
 }
 
-body.advanced .mf-advanced {
+.mf-calc.advanced .mf-advanced {
     display: flex !important;
 }
 
 /* Exceptions for specific elements */
-body.advanced .mf-field.mf-advanced {
+.mf-calc.advanced .mf-field.mf-advanced {
     display: flex !important;
 }
 
-body.advanced .btn-remove.mf-advanced,
-body.advanced .btn-nerds.mf-advanced {
+.mf-calc.advanced .btn-remove.mf-advanced,
+.mf-calc.advanced .btn-nerds.mf-advanced {
     display: flex !important;
 }
 
@@ -724,8 +724,8 @@ body.advanced .btn-nerds.mf-advanced {
 }
 
 /* Em modo avançado, reduzir destaque */
-body.advanced .field-price input,
-body.advanced .field-profit input {
+.mf-calc.advanced .field-price input,
+.mf-calc.advanced .field-profit input {
     font-size: 15px;
     padding: 10px 12px;
     box-shadow: none;
@@ -856,28 +856,28 @@ body.advanced .field-profit input {
 /* =========================================
    RECOMMENDATIONS WARNING (MARKETFACIL)
    ========================================= */
-body.recommendations-active .mf-calc .mf-warning input,
-body.recommendations-active .mf-calc .mf-warning select {
+.mf-calc.recommendations-active .mf-warning input,
+.mf-calc.recommendations-active .mf-warning select {
     border-color: var(--danger) !important;
     color: var(--danger) !important;
     background-color: rgba(239, 68, 68, 0.05) !important;
     box-shadow: 0 0 0 1px var(--danger) inset !important;
 }
 
-body.recommendations-active .mf-calc .result-box.mf-warning {
+.mf-calc.recommendations-active .result-box.mf-warning {
     border-color: var(--danger) !important;
     box-shadow: 0 0 20px rgba(239, 68, 68, 0.2) !important;
 }
 
-body.recommendations-active .mf-calc .result-box.mf-warning::before {
+.mf-calc.recommendations-active .result-box.mf-warning::before {
     background: var(--danger-gradient) !important;
 }
 
-body.recommendations-active .mf-calc .result-box.mf-warning label {
+.mf-calc.recommendations-active .result-box.mf-warning label {
     color: var(--danger) !important;
 }
 
-body.recommendations-active .mf-calc .result-box.mf-warning input {
+.mf-calc.recommendations-active .result-box.mf-warning input {
     color: var(--danger) !important;
     background: var(--danger-gradient) !important;
     -webkit-background-clip: text !important;
@@ -889,13 +889,13 @@ body.recommendations-active .mf-calc .result-box.mf-warning input {
 /* =========================================
    RECOMMENDATIONS HEALTHY (MARKETFACIL)
    ========================================= */
-body.recommendations-active .mf-calc .mf-healthy input,
-body.recommendations-active .mf-calc .mf-healthy select {
+.mf-calc.recommendations-active .mf-healthy input,
+.mf-calc.recommendations-active .mf-healthy select {
     border-color: var(--success) !important;
-    background-color: rgba(16, 185, 129, 0.02) !important;
+    background-color: rgba(16, 185, 129, 0.05) !important;
 }
 
-body.recommendations-active .mf-calc .result-box.mf-healthy {
+.mf-calc.recommendations-active .result-box.mf-healthy {
     border-color: var(--success) !important;
     box-shadow: 0 0 15px rgba(16, 185, 129, 0.15) !important;
 }
