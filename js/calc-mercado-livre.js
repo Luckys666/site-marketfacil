@@ -25,11 +25,14 @@ class Calculator {
         document.getElementById('btn-add-product').addEventListener('click', () => this.addProduct());
 
         // Theme toggle
-        document.getElementById('theme-toggle').addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            const btn = document.getElementById('theme-toggle');
-            btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-        });
+        const btnTheme = document.getElementById('theme-toggle');
+        if (btnTheme) {
+            btnTheme.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+            btnTheme.addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                btnTheme.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+            });
+        }
 
         // Advanced Mode toggle
         const advancedToggle = document.getElementById('advanced-mode');
