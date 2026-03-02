@@ -194,8 +194,12 @@ class Calculator {
         // Recommendations Mode toggle
         const recToggle = document.getElementById('recommendations-mode');
         if (recToggle) {
+            // Apply initial state if already checked
+            document.body.classList.toggle('recommendations-active', recToggle.checked);
+
             recToggle.addEventListener('change', () => {
                 document.body.classList.toggle('recommendations-active', recToggle.checked);
+                this.recalculateAll(); // Force visual update on all products
             });
         }
 
