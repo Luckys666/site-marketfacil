@@ -710,26 +710,56 @@ body.advanced .field-profit input {
     display: none !important;
 }
 
-/* MOBILE */
-@media (max-width: 700px) {
-    .product-row {
+/* =========================================
+   RESPONSIVIDADE (TABLETS E CELULARES)
+   ========================================= */
+
+@media (max-width: 1024px) {
+
+    /* TABLET: Coloca os resultados embaixo dos inputs, mas lado a lado */
+    .card-layout {
+        flex-direction: column;
+    }
+
+    .results-section {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .result-box {
+        flex: 1;
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* CELULAR GRANDE: Empilha todos os inputs para não amassar fontes */
+    .mf-calc {
+        padding: 20px 15px;
+    }
+
+    .mf-header h1 {
+        font-size: 24px;
+    }
+
+    .inputs-row {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .product-row .mf-field {
-        width: 100%;
+    .mf-grid-2,
+    .mf-grid-3 {
+        grid-template-columns: 1fr;
     }
 
+    /* Libera a largura das caixas, permitindo ocupar 100% da tela */
     .field-sku,
     .field-cost,
-    .field-roi {
+    .field-margin,
+    .field-contrib {
+        min-width: 100%;
         width: 100%;
-    }
-
-    .btn-remove,
-    .btn-nerds {
-        align-self: flex-end;
     }
 
     .nerds-row {
@@ -737,25 +767,29 @@ body.advanced .field-profit input {
     }
 }
 
-/* MOBILE */
-@media (max-width: 500px) {
-    .mf-calc {
-        padding: 16px;
+@media (max-width: 480px) {
+
+    /* CELULAR PEQUENO: Diminui fonte de resultado e alinha Header */
+    .result-box input {
+        font-size: 28px;
+        /* Ajuste para não transbordar números GIGANTES */
+        padding: 10px;
     }
 
-    .mf-header h1 {
-        font-size: 18px;
+    .results-section {
+        flex-direction: column;
+        /* Resultados voltam a ficar um embaixo do outro no iPhone pequeno */
     }
 
-    .product-top {
-        flex-wrap: wrap;
+    .mf-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
     }
 
-    .mf-field-sku {
-        width: 80px;
-    }
-
-    .mf-nerds-grid {
-        grid-template-columns: 1fr;
+    .btn-theme {
+        position: absolute;
+        top: 30px;
+        right: 40px;
     }
 }
