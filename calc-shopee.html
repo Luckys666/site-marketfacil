@@ -88,7 +88,7 @@
             <div class="card-layout">
                 <!-- ESQUERDA: Inputs -->
                 <div class="inputs-section">
-                    <!-- Linha 1: SKU, Custo, Taxas -->
+                    <!-- Linha 1: SKU, Custo -->
                     <div class="inputs-row">
                         <div class="mf-field field-sku" title="Identificador único para seu produto">
                             <label>SKU</label>
@@ -98,89 +98,90 @@
                             <label>Custo (R$)</label>
                             <input type="number" class="input-cost" value="14" step="0.01">
                         </div>
-                        <div class="inputs-row">
-                            <div class="mf-field"
-                                title="Comissão da Shopee unificada com Frete Grátis (20% para itens abaixo de R$80, 14% para R$80 ou mais).">
-                                <label>Comissão Base</label>
-                                <input type="text" class="input-shopee-comm" value="20%" disabled>
-                            </div>
-                            <div class="mf-field" title="Taxa fixa adicional baseada no preço do produto.">
-                                <label>Taxa Fixa (R$)</label>
-                                <input type="text" class="input-shopee-fixed" value="0,00" disabled>
-                            </div>
-                            <div class="mf-field mf-advanced field-tacos"
-                                title="Total Advertising Cost of Sale - Investimento percentual em Mercado Ads sobre a venda">
-                                <label>Gasto com Ads (TACOS %)</label>
-                                <div class="tacos-input-wrapper">
-                                    <input type="number" class="input-tacos" value="0" step="0.1">
-                                    <span class="ads-cta-btn" onclick="openAdsModal()"
-                                        title="Otimize seus anúncios e aumente seu lucro!">🔥 Otimizar Ads</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Linha 3: Margem -->
-                        <div class="inputs-row">
-                            <div class="mf-field field-margin"
-                                title="Margem de lucro líquido desejada sobre o faturamento">
-                                <label>Margem de Lucro (%)</label>
-                                <div class="margin-inline">
-                                    <input type="range" class="input-margin-slider" min="0" max="60" step="0.5"
-                                        value="10">
-                                    <input type="number" class="input-margin" value="10" step="0.5">
-                                </div>
-                            </div>
-                            <div class="mf-field field-contrib"
-                                title="Percentual que sobra após custos variáveis (Produto, Comissões, Impostos) para pagar os Custos Fixos.">
-                                <label>Margem de Contribuição</label>
-                                <input type="text" class="output-contrib" value="0%" disabled>
-                            </div>
-                        </div>
-
-                        <button class="btn-nerds mf-advanced" title="Expandir detalhes">Cálculos para Nerds 📊</button>
                     </div>
-
-                    <!-- DIREITA: Resultados (vertical) -->
-                    <div class="results-section">
-                        <div class="result-box result-price"
-                            title="Preço final ideal a ser anunciado (Pode ser alterado para fazer cálculos reversos)">
-                            <label>💰 PREÇO DE VENDA</label>
-                            <input type="text" class="input-price" placeholder="0,00">
+                    <!-- Linha 2 -->
+                    <div class="inputs-row">
+                        <div class="mf-field"
+                            title="Comissão da Shopee unificada com Frete Grátis (20% para itens abaixo de R$80, 14% para R$80 ou mais).">
+                            <label>Comissão Base</label>
+                            <input type="text" class="input-shopee-comm" value="20%" disabled>
                         </div>
-                        <div class="result-box result-profit"
-                            title="Lucro Líquido final na venda desta unidade (Pode ser alterado para inverter o cálculo)">
-                            <label>✅ LUCRO</label>
-                            <input type="text" class="input-profit" placeholder="0,00">
+                        <div class="mf-field" title="Taxa fixa adicional baseada no preço do produto.">
+                            <label>Taxa Fixa (R$)</label>
+                            <input type="text" class="input-shopee-fixed" value="0,00" disabled>
                         </div>
-                        <div class="result-box result-roi mf-advanced"
-                            title="Retorno sobre o Investimento - Lucro / Custo do Produto (Pode ser alterado para achar o Preço via ROI)">
-                            <label>📈 ROI (%)</label>
-                            <input type="number" class="input-roi" value="0" step="1">
+                        <div class="mf-field mf-advanced field-tacos"
+                            title="Total Advertising Cost of Sale - Investimento percentual em Mercado Ads sobre a venda">
+                            <label>Gasto com Ads (TACOS %)</label>
+                            <div class="tacos-input-wrapper">
+                                <input type="number" class="input-tacos" value="0" step="0.1">
+                                <span class="ads-cta-btn" onclick="openAdsModal()"
+                                    title="Otimize seus anúncios e aumente seu lucro!">🔥 Otimizar Ads</span>
+                            </div>
                         </div>
                     </div>
+                    <!-- Linha 3: Margem -->
+                    <div class="inputs-row">
+                        <div class="mf-field field-margin" title="Margem de lucro líquido desejada sobre o faturamento">
+                            <label>Margem de Lucro (%)</label>
+                            <div class="margin-inline">
+                                <input type="range" class="input-margin-slider" min="0" max="60" step="0.5" value="10">
+                                <input type="number" class="input-margin" value="10" step="0.5">
+                            </div>
+                        </div>
+                        <div class="mf-field field-contrib"
+                            title="Percentual que sobra após custos variáveis (Produto, Comissões, Impostos) para pagar os Custos Fixos.">
+                            <label>Margem de Contribuição</label>
+                            <input type="text" class="output-contrib" value="0%" disabled>
+                        </div>
+                    </div>
+
+                    <button class="btn-nerds mf-advanced" title="Expandir detalhes">Cálculos para Nerds 📊</button>
                 </div>
 
-                <!-- NERDS (OCULTO) -->
-                <div class="nerds-row mf-hidden">
-                    <div class="nerd-item" title="Soma da Taxa ML + Custo de Envio (Mercado Envios)"><span>Comissão
-                            R$</span><strong class="output-commission-val">-</strong></div>
-                    <div class="nerd-item"
-                        title="Percentual real pago ao Mercado Livre (Taxa ML + Envio) pelo preço da venda">
-                        <span>Comissão
-                            %</span><strong class="output-commission-perc">-</strong></div>
-                    <div class="nerd-item" title="Custo dos impostos estatais ou DAS sobre essa venda"><span>Impostos
-                            R$</span><strong class="output-taxes-val">-</strong></div>
-                    <div class="nerd-item" title="Preço da Venda - Custo - Total pago ao ML (Comissão + Frete)">
-                        <span>Lucro
-                            Bruto</span><strong class="output-gross">-</strong></div>
-                    <div class="nerd-item" title="Lucro Bruto - Impostos - Custos de Publicidade (TACOS)"><span>Lucro
-                            após
-                            Imp.</span><strong class="output-gross-after-tax">-</strong>
+                <!-- DIREITA: Resultados (vertical) -->
+                <div class="results-section">
+                    <div class="result-box result-price"
+                        title="Preço final ideal a ser anunciado (Pode ser alterado para fazer cálculos reversos)">
+                        <label>💰 PREÇO DE VENDA</label>
+                        <input type="text" class="input-price" placeholder="0,00">
                     </div>
-                    <div class="nerd-item"
-                        title="Valor do Preço cobrindo sua folha e custos fixos estipulados via Rateio">
-                        <span>Rateio Custo Fixo</span><strong class="output-op-cost">-</strong>
+                    <div class="result-box result-profit"
+                        title="Lucro Líquido final na venda desta unidade (Pode ser alterado para inverter o cálculo)">
+                        <label>✅ LUCRO</label>
+                        <input type="text" class="input-profit" placeholder="0,00">
+                    </div>
+                    <div class="result-box result-roi mf-advanced"
+                        title="Retorno sobre o Investimento - Lucro / Custo do Produto (Pode ser alterado para achar o Preço via ROI)">
+                        <label>📈 ROI (%)</label>
+                        <input type="number" class="input-roi" value="0" step="1">
                     </div>
                 </div>
+            </div>
+
+            <!-- NERDS (OCULTO) -->
+            <div class="nerds-row mf-hidden">
+                <div class="nerd-item" title="Soma da Taxa ML + Custo de Envio (Mercado Envios)"><span>Comissão
+                        R$</span><strong class="output-commission-val">-</strong></div>
+                <div class="nerd-item"
+                    title="Percentual real pago ao Mercado Livre (Taxa ML + Envio) pelo preço da venda">
+                    <span>Comissão
+                        %</span><strong class="output-commission-perc">-</strong>
+                </div>
+                <div class="nerd-item" title="Custo dos impostos estatais ou DAS sobre essa venda"><span>Impostos
+                        R$</span><strong class="output-taxes-val">-</strong></div>
+                <div class="nerd-item" title="Preço da Venda - Custo - Total pago ao ML (Comissão + Frete)">
+                    <span>Lucro
+                        Bruto</span><strong class="output-gross">-</strong>
+                </div>
+                <div class="nerd-item" title="Lucro Bruto - Impostos - Custos de Publicidade (TACOS)"><span>Lucro
+                        após
+                        Imp.</span><strong class="output-gross-after-tax">-</strong>
+                </div>
+                <div class="nerd-item" title="Valor do Preço cobrindo sua folha e custos fixos estipulados via Rateio">
+                    <span>Rateio Custo Fixo</span><strong class="output-op-cost">-</strong>
+                </div>
+            </div>
         </article>
     </template>
 
