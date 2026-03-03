@@ -17,6 +17,7 @@ class Calculator {
         this.globalTax = document.getElementById('global-tax');
         this.globalOpCost = document.getElementById('global-op-cost');
         this.globalCpf = document.getElementById('global-cpf');
+        this.globalPix = document.getElementById('global-pix');
 
         this.init();
     }
@@ -51,7 +52,8 @@ class Calculator {
         document.getElementById('btn-export').addEventListener('click', () => this.exportCSV());
 
         // Global inputs
-        [this.globalRevenue, this.globalFixedCost, this.globalTax, this.globalCpf].forEach(el => {
+        [this.globalRevenue, this.globalFixedCost, this.globalTax, this.globalCpf, this.globalPix].forEach(el => {
+            if (!el) return;
             el.addEventListener('input', () => {
                 this.updateOpCost();
                 this.recalculateAll();
@@ -107,6 +109,7 @@ class Calculator {
     getGlobalTaxRate() { return (parseFloat(this.globalTax.value) || 0) / 100; }
 
     isCpfActive() { return this.globalCpf && this.globalCpf.checked; }
+    isPixActive() { return this.globalPix && this.globalPix.checked; }
 
     getOpCostRate() {
         const rev = this.getGlobalRevenue();
@@ -247,21 +250,29 @@ class Product {
 
     getShopeeFees(price) {
         if (price <= 0) return { commRate: 0, fixedFee: 0 };
-        
+
         let commRate = price < 80 ? 0.20 : 0.14;
         let fixedFee = 0;
-        
+
         if (price < 8) fixedFee = price * 0.50;
         else if (price < 12) fixedFee = 4.00 + (price * 0.05);
         else if (price < 80) fixedFee = 4.00;
         else if (price < 100) fixedFee = 16.00;
         else if (price < 200) fixedFee = 20.00;
         else fixedFee = 26.00;
-        
+
         if (this.calc.isCpfActive()) {
             fixedFee += 3.00;
         }
-        
+
+        if (this.calc.isPixActive() && price >= 80) {
+            if (price < 500) commRate -= 0.05;
+            else commRate -= 0.08;
+
+            // Garantir que a comissão não zere bizarramente em cenários futuros
+            if (commRate < 0) commRate = 0;
+        }
+
         return { commRate, fixedFee };
     }
 
@@ -286,7 +297,7 @@ class Product {
 
         } else if (source === 'profit') {
             const targetProfit = this.calc.parse(this.inputProfit.value);
-            
+
             for (let i = 0; i < 20; i++) {
                 let denom = 1 - shopeeFees.commRate - taxRate - tacosRate - opRate;
                 if (denom > 0.01) {
@@ -304,7 +315,7 @@ class Product {
         } else if (source === 'roi') {
             const targetRoi = this.calc.parse(this.inputRoi.value) / 100;
             const targetProfit = targetRoi * cost;
-            
+
             for (let i = 0; i < 20; i++) {
                 let denom = 1 - shopeeFees.commRate - taxRate - tacosRate - opRate;
                 if (denom > 0.01) {
@@ -322,7 +333,7 @@ class Product {
         } else {
             // Margin driven
             marginRate = this.calc.parse(this.inputMargin.value) / 100;
-            
+
             for (let i = 0; i < 20; i++) {
                 let denom = 1 - marginRate - shopeeFees.commRate - taxRate - tacosRate - opRate;
                 if (denom > 0.01) {
@@ -338,7 +349,7 @@ class Product {
         if (this.inputShopeeFixed) this.inputShopeeFixed.value = this.calc.fmtMoney(shopeeFees.fixedFee);
 
         // === DERIVED VALUES ===
-        const commissionVal = (price * shopeeFees.commRate) + shopeeFees.fixedFee; 
+        const commissionVal = (price * shopeeFees.commRate) + shopeeFees.fixedFee;
         const commissionPerc = price > 0 ? (commissionVal / price) : 0;
         const taxesVal = price * taxRate;
         const tacosVal = price * tacosRate;
