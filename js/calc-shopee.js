@@ -18,6 +18,10 @@ class Calculator {
         this.globalOpCost = document.getElementById('global-op-cost');
         this.globalCpf = document.getElementById('global-cpf');
         this.globalPix = document.getElementById('global-pix');
+        this.globalDestaque = document.getElementById('global-destaque');
+        this.globalDestaquePerc = document.getElementById('global-destaque-perc');
+        this.globalAdsfacil = document.getElementById('global-adsfacil');
+        this.globalAdsfacilPerc = document.getElementById('global-adsfacil-perc');
 
         this.init();
     }
@@ -52,7 +56,12 @@ class Calculator {
         document.getElementById('btn-export').addEventListener('click', () => this.exportCSV());
 
         // Global inputs
-        [this.globalRevenue, this.globalFixedCost, this.globalTax, this.globalCpf, this.globalPix].forEach(el => {
+        [
+            this.globalRevenue, this.globalFixedCost, this.globalTax,
+            this.globalCpf, this.globalPix,
+            this.globalDestaque, this.globalDestaquePerc,
+            this.globalAdsfacil, this.globalAdsfacilPerc
+        ].forEach(el => {
             if (!el) return;
             el.addEventListener('input', () => {
                 this.updateOpCost();
@@ -110,6 +119,12 @@ class Calculator {
 
     isCpfActive() { return this.globalCpf && this.globalCpf.checked; }
     isPixActive() { return this.globalPix && this.globalPix.checked; }
+
+    isDestaqueActive() { return this.globalDestaque && this.globalDestaque.checked; }
+    getDestaquePerc() { return (parseFloat(this.globalDestaquePerc?.value) || 0) / 100; }
+
+    isAdsfacilActive() { return this.globalAdsfacil && this.globalAdsfacil.checked; }
+    getAdsfacilPerc() { return (parseFloat(this.globalAdsfacilPerc?.value) || 0) / 100; }
 
     getOpCostRate() {
         const rev = this.getGlobalRevenue();
@@ -271,6 +286,14 @@ class Product {
 
             // Garantir que a comissão não zere bizarramente em cenários futuros
             if (commRate < 0) commRate = 0;
+        }
+
+        if (this.calc.isDestaqueActive()) {
+            commRate += this.calc.getDestaquePerc();
+        }
+
+        if (this.calc.isAdsfacilActive()) {
+            commRate += this.calc.getAdsfacilPerc();
         }
 
         return { commRate, fixedFee };
