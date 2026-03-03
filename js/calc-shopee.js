@@ -16,8 +16,6 @@ class Calculator {
         this.globalFixedCost = document.getElementById('global-fixed-cost');
         this.globalTax = document.getElementById('global-tax');
         this.globalOpCost = document.getElementById('global-op-cost');
-        this.globalCpf = document.getElementById('global-cpf');
-        this.globalPix = document.getElementById('global-pix');
         this.globalDevolucao = document.getElementById('global-devolucao');
         this.globalDestaque = document.getElementById('global-destaque');
         this.globalDestaquePerc = document.getElementById('global-destaque-perc');
@@ -59,7 +57,7 @@ class Calculator {
         // Global inputs
         [
             this.globalRevenue, this.globalFixedCost, this.globalTax,
-            this.globalCpf, this.globalPix, this.globalDevolucao,
+            this.globalCpf, this.globalDevolucao,
             this.globalDestaque, this.globalDestaquePerc,
             this.globalAdsfacil, this.globalAdsfacilPerc
         ].forEach(el => {
@@ -119,7 +117,6 @@ class Calculator {
     getGlobalTaxRate() { return (parseFloat(this.globalTax.value) || 0) / 100; }
 
     isCpfActive() { return this.globalCpf && this.globalCpf.checked; }
-    isPixActive() { return this.globalPix && this.globalPix.checked; }
     isDevolucaoActive() { return this.globalDevolucao && this.globalDevolucao.checked; }
 
     isDestaqueActive() { return this.globalDestaque && this.globalDestaque.checked; }
@@ -272,26 +269,23 @@ class Product {
         let fixedFee = 0;
 
         if (price < 8) fixedFee = price * 0.50;
-        else if (price < 12) fixedFee = 4.00 + (price * 0.05);
         else if (price < 80) fixedFee = 4.00;
         else if (price < 100) fixedFee = 16.00;
         else if (price < 200) fixedFee = 20.00;
         else fixedFee = 26.00;
 
         if (this.calc.isCpfActive()) {
-            fixedFee += 3.00;
+            if (price < 12) {
+                // Taxa extra regressiva: 25% do valor do produto
+                fixedFee += price * 0.25;
+            } else {
+                // Taxa extra cheia
+                fixedFee += 3.00;
+            }
         }
 
         if (this.calc.isDevolucaoActive()) {
             fixedFee += 0.49;
-        }
-
-        if (this.calc.isPixActive() && price >= 80) {
-            if (price < 500) commRate -= 0.05;
-            else commRate -= 0.08;
-
-            // Garantir que a comissão não zere bizarramente em cenários futuros
-            if (commRate < 0) commRate = 0;
         }
 
         if (this.calc.isDestaqueActive()) {
