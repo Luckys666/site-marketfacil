@@ -18,6 +18,7 @@ class Calculator {
         this.globalOpCost = document.getElementById('global-op-cost');
         this.globalCpf = document.getElementById('global-cpf');
         this.globalPix = document.getElementById('global-pix');
+        this.globalDevolucao = document.getElementById('global-devolucao');
         this.globalDestaque = document.getElementById('global-destaque');
         this.globalDestaquePerc = document.getElementById('global-destaque-perc');
         this.globalAdsfacil = document.getElementById('global-adsfacil');
@@ -58,7 +59,7 @@ class Calculator {
         // Global inputs
         [
             this.globalRevenue, this.globalFixedCost, this.globalTax,
-            this.globalCpf, this.globalPix,
+            this.globalCpf, this.globalPix, this.globalDevolucao,
             this.globalDestaque, this.globalDestaquePerc,
             this.globalAdsfacil, this.globalAdsfacilPerc
         ].forEach(el => {
@@ -119,6 +120,7 @@ class Calculator {
 
     isCpfActive() { return this.globalCpf && this.globalCpf.checked; }
     isPixActive() { return this.globalPix && this.globalPix.checked; }
+    isDevolucaoActive() { return this.globalDevolucao && this.globalDevolucao.checked; }
 
     isDestaqueActive() { return this.globalDestaque && this.globalDestaque.checked; }
     getDestaquePerc() { return (parseFloat(this.globalDestaquePerc?.value) || 0) / 100; }
@@ -278,6 +280,10 @@ class Product {
 
         if (this.calc.isCpfActive()) {
             fixedFee += 3.00;
+        }
+
+        if (this.calc.isDevolucaoActive()) {
+            fixedFee += 0.49;
         }
 
         if (this.calc.isPixActive() && price >= 80) {
