@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Preços para Shopee</title>
+    <link rel="stylesheet" href="css/style-shopee.css?v=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <main class="mf-calc">
+        <header class="mf-header">
+            <h1>Calculadora de Preços para <span>Shopee</span></h1>
+        </header>
+
+        <!-- CONFIGURAÇÕES GLOBAIS -->
+        <section class="mf-section mf-global">
+            <h2>⚙️ Configurações Globais</h2>
+            <div class="mf-grid-2">
+                <div class="mf-field" title="Faturamento bruto estimado para calcular o rateio correto.">
+                    <label>Faturamento Mensal (R$)</label>
+                    <input type="number" id="global-revenue" value="100" step="0.01">
+                </div>
+                <div class="mf-field"
+                    title="Todos os custos fixos mensais do negócio (Aluguel, Sistemas, Pró-labore, etc).">
+                    <label>Custos Fixos (R$)</label>
+                    <input type="number" id="global-fixed-cost" value="10" step="0.01">
+                </div>
+                <div class="mf-field" title="Soma das alíquotas de imposto da empresa (Simples Nacional, ICMS, etc).">
+                    <label>Impostos (%)</label>
+                    <input type="number" id="global-tax" value="10" step="0.5">
+                </div>
+                <div class="mf-field"
+                    title="Percentual que o Custo Fixo representa em relação ao Faturamento (Rateio automático).">
+                    <label>Custo Operacional (%)</label>
+                    <input type="text" id="global-op-cost" value="10,00%" disabled>
+                </div>
+                <div class="mf-field mf-cpf-toggle"
+                    title="Vendedores CPF com mais de 450 vendas em 90 dias pagam R$ 3,00 adicionais por item.">
+                    <label style="color: #ee4d2d;">Taxa de Vendedor CPF (Excedente)</label>
+                    <label class="toggle-advanced mt-2" style="margin-top: 10px;">
+                        <input type="checkbox" id="global-cpf">
+                        <span class="toggle-slider"></span>
+                        Adicionar + R$ 3,00 por Venda
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- AÇÕES -->
+        <section class="mf-actions-bar">
+            <label class="toggle-advanced">
+                <input type="checkbox" id="advanced-mode">
+                <span class="toggle-slider"></span>
+                Modo Avançado
+            </label>
+            <label class="toggle-advanced"
+                title="Destacar em vermelho os campos que não atingem a meta ideal (Custo Op abaixo de 10%, Contribuição acima de 20%, Lucro acima de 10%)">
+                <input type="checkbox" id="recommendations-mode">
+                <span class="toggle-slider"></span>
+                Recomendações Marketfacil
+            </label>
+            <button id="btn-export" class="btn-export">📥 Exportar CSV</button>
+            <button id="btn-add-product" class="btn-add mf-advanced">+ Adicionar Produto</button>
+        </section>
+
+        <!-- PRODUTO -->
+        <section class="mf-section mf-product">
+            <div id="products-container">
+                <!-- Products injected here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- TEMPLATE DO PRODUTO -->
+    <template id="product-template">
+        <article class="product-card">
+            <!-- Botão Remover no canto -->
+            <button class="btn-remove mf-advanced" title="Remover Produto">×</button>
+
+            <div class="card-layout">
+                <!-- ESQUERDA: Inputs -->
+                <div class="inputs-section">
+                    <!-- Linha 1: SKU, Custo, Taxas -->
+                    <div class="inputs-row">
+                        <div class="mf-field field-sku" title="Identificador único para seu produto">
+                            <label>SKU</label>
+                            <input type="text" class="input-sku" value="ABC">
+                        </div>
+                        <div class="mf-field field-cost" title="Custo de aquisição do produto junto ao fornecedor">
+                            <label>Custo (R$)</label>
+                            <input type="number" class="input-cost" value="14" step="0.01">
+                        </div>
+                        <div class="inputs-row">
+                            <div class="mf-field"
+                                title="Comissão da Shopee unificada com Frete Grátis (20% para itens abaixo de R$80, 14% para R$80 ou mais).">
+                                <label>Comissão Base</label>
+                                <input type="text" class="input-shopee-comm" value="20%" disabled>
+                            </div>
+                            <div class="mf-field" title="Taxa fixa adicional baseada no preço do produto.">
+                                <label>Taxa Fixa (R$)</label>
+                                <input type="text" class="input-shopee-fixed" value="0,00" disabled>
+                            </div>
+                            <div class="mf-field mf-advanced field-tacos"
+                                title="Total Advertising Cost of Sale - Investimento percentual em Mercado Ads sobre a venda">
+                                <label>Gasto com Ads (TACOS %)</label>
+                                <div class="tacos-input-wrapper">
+                                    <input type="number" class="input-tacos" value="0" step="0.1">
+                                    <span class="ads-cta-btn" onclick="openAdsModal()"
+                                        title="Otimize seus anúncios e aumente seu lucro!">🔥 Otimizar Ads</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Linha 3: Margem -->
+                        <div class="inputs-row">
+                            <div class="mf-field field-margin"
+                                title="Margem de lucro líquido desejada sobre o faturamento">
+                                <label>Margem de Lucro (%)</label>
+                                <div class="margin-inline">
+                                    <input type="range" class="input-margin-slider" min="0" max="60" step="0.5"
+                                        value="10">
+                                    <input type="number" class="input-margin" value="10" step="0.5">
+                                </div>
+                            </div>
+                            <div class="mf-field field-contrib"
+                                title="Percentual que sobra após custos variáveis (Produto, Comissões, Impostos) para pagar os Custos Fixos.">
+                                <label>Margem de Contribuição</label>
+                                <input type="text" class="output-contrib" value="0%" disabled>
+                            </div>
+                        </div>
+
+                        <button class="btn-nerds mf-advanced" title="Expandir detalhes">Cálculos para Nerds 📊</button>
+                    </div>
+
+                    <!-- DIREITA: Resultados (vertical) -->
+                    <div class="results-section">
+                        <div class="result-box result-price"
+                            title="Preço final ideal a ser anunciado (Pode ser alterado para fazer cálculos reversos)">
+                            <label>💰 PREÇO DE VENDA</label>
+                            <input type="text" class="input-price" placeholder="0,00">
+                        </div>
+                        <div class="result-box result-profit"
+                            title="Lucro Líquido final na venda desta unidade (Pode ser alterado para inverter o cálculo)">
+                            <label>✅ LUCRO</label>
+                            <input type="text" class="input-profit" placeholder="0,00">
+                        </div>
+                        <div class="result-box result-roi mf-advanced"
+                            title="Retorno sobre o Investimento - Lucro / Custo do Produto (Pode ser alterado para achar o Preço via ROI)">
+                            <label>📈 ROI (%)</label>
+                            <input type="number" class="input-roi" value="0" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NERDS (OCULTO) -->
+                <div class="nerds-row mf-hidden">
+                    <div class="nerd-item" title="Soma da Taxa ML + Custo de Envio (Mercado Envios)"><span>Comissão
+                            R$</span><strong class="output-commission-val">-</strong></div>
+                    <div class="nerd-item"
+                        title="Percentual real pago ao Mercado Livre (Taxa ML + Envio) pelo preço da venda">
+                        <span>Comissão
+                            %</span><strong class="output-commission-perc">-</strong></div>
+                    <div class="nerd-item" title="Custo dos impostos estatais ou DAS sobre essa venda"><span>Impostos
+                            R$</span><strong class="output-taxes-val">-</strong></div>
+                    <div class="nerd-item" title="Preço da Venda - Custo - Total pago ao ML (Comissão + Frete)">
+                        <span>Lucro
+                            Bruto</span><strong class="output-gross">-</strong></div>
+                    <div class="nerd-item" title="Lucro Bruto - Impostos - Custos de Publicidade (TACOS)"><span>Lucro
+                            após
+                            Imp.</span><strong class="output-gross-after-tax">-</strong>
+                    </div>
+                    <div class="nerd-item"
+                        title="Valor do Preço cobrindo sua folha e custos fixos estipulados via Rateio">
+                        <span>Rateio Custo Fixo</span><strong class="output-op-cost">-</strong>
+                    </div>
+                </div>
+        </article>
+    </template>
+
+    <!-- Modal Promocional do Curso Marketfacil Ads -->
+    <div id="mf-ads-modal" class="mf-modal-overlay">
+        <div class="mf-modal-content">
+            <button class="mf-modal-close" onclick="closeAdsModal()">✕</button>
+            <div class="mf-modal-header">
+                <h3>🚀 Escale com <span>Ads Fácil</span></h3>
+            </div>
+            <div class="mf-modal-body">
+                <p><strong>Domine as ferramentas de anúncios pagos no Mercado Livre.</strong></p>
+                <p
+                    style="font-family: 'Inter', sans-serif; color: var(--primary); font-size: 14px; font-weight: 700; text-transform: uppercase; margin-top: -15px; margin-bottom: 24px; letter-spacing: 0.5px;">
+                    🎥 Curso Gravado e 100% Atualizado</p>
+                <div class="mf-modal-highlight-box">
+                    <ul class="mf-modal-benefits">
+                        <li><span class="hotmart-check">✔</span> Estratégias simples e eficientes</li>
+                        <li><span class="hotmart-check">✔</span> Product Ads e Brand Ads para Mercado Livre</li>
+                        <li><span class="hotmart-check">✔</span> Otimização de campanhas focada em rentabilidade</li>
+                        <li><span class="hotmart-check">✔</span> Conheça os erros comuns que consomem sua verba</li>
+                    </ul>
+                </div>
+                <a href="https://hotmart.com/pt-br/marketplace/produtos/ads-facil/V99746396J" target="_blank"
+                    class="mf-modal-cta">Quero Otimizar Meus Anúncios Agora</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT -->
+    <script src="js/calc-shopee.js"></script>
+</body>
+
+</html>

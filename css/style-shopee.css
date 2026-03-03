@@ -1,0 +1,1229 @@
+/* =============================================
+   CALCULADORA ML - CSS CLEAN & RESPONSIVO
+   ============================================= */
+
+:root {
+    --bg: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-input: #f1f5f9;
+    --border: #e2e8f0;
+    --border-focus: #3b82f6;
+    --primary: #ee4d2d;
+    --primary-light: rgba(238, 77, 45, 0.1);
+    --primary-gradient: linear-gradient(135deg, #ff7337 0%, #ee4d2d 100%);
+    --success: #10b981;
+    --success-light: rgba(16, 185, 129, 0.1);
+    --success-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    --danger: #ef4444;
+    --danger-gradient: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    --roi: #8b5cf6;
+    --roi-gradient: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --text-label: #334155;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-glow: 0 0 20px rgba(238, 77, 45, 0.25);
+    --radius: 12px;
+}
+
+
+.mf-calc,
+.mf-calc * {
+    box-sizing: border-box;
+}
+
+body {
+    transition: background 0.3s, color 0.3s;
+}
+
+/* LAYOUT */
+.mf-calc {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text);
+    background: transparent;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 40px;
+}
+
+/* HEADER */
+.mf-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.mf-header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.5px;
+}
+
+.mf-header h1 span {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.btn-theme {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-theme:hover {
+    border-color: var(--primary);
+}
+
+/* SECTIONS & GLASSMORPHISM */
+.mf-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mf-section:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.mf-section h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* GRIDS */
+.mf-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.mf-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+.mf-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 600px) {
+
+    .mf-grid-2,
+    .mf-grid-3,
+    .mf-grid-4 {
+        grid-template-columns: 1fr;
+        gap: 6px !important;
+    }
+
+    .mf-section {
+        padding: 16px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .mf-field {
+        gap: 2px !important;
+        /* Extremely tight label-to-input space */
+    }
+
+    .mf-field label {
+        font-size: 13px !important;
+        margin-bottom: 0 !important;
+    }
+
+    /* Fields and Card Padding Resizing for Mobile */
+    .product-card {
+        padding: 16px 12px;
+    }
+
+    .card-layout {
+        flex-direction: column;
+        gap: 16px;
+        /* Reduced from 20px */
+    }
+
+    .inputs-section {
+        gap: 8px;
+        /* Extremely tight stack for mobile */
+    }
+
+    .mf-calc input[type="text"],
+    .mf-calc input[type="number"],
+    .mf-calc select.input-category,
+    .mf-calc select.input-weight {
+        padding: 8px 10px !important;
+        font-size: 14px;
+        height: 38px;
+        /* Force uniform shorter height */
+    }
+
+    .inputs-row {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        /* Extremely tight gap */
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .inputs-row .mf-field {
+        flex: none !important;
+        width: 100% !important;
+        margin-bottom: 0 !important;
+    }
+
+    /* Modal Shrinkage for Mobile */
+    .mf-modal-content {
+        padding: 16px 16px 20px 16px !important;
+        /* Absolute minimal padding */
+        width: 100%;
+        margin: 10px;
+        /* Safe area */
+        max-height: 80vh !important;
+        /* Squeeze tight and force scroll if needed */
+        overflow-y: auto !important;
+    }
+
+    .mf-modal-header h3 {
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
+
+    .mf-modal-body p {
+        font-size: 15px;
+        margin-bottom: 16px;
+    }
+
+    .mf-modal-highlight-box {
+        padding: 16px;
+        margin-bottom: 24px;
+    }
+
+    .mf-modal-benefits li {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .mf-modal-cta {
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    /* Make Ads Button Bouncy on Mobile (Not giant) */
+    .tacos-input-wrapper input.input-tacos {
+        padding-right: 125px !important;
+        /* Revert to moderate space */
+    }
+
+    .ads-cta-btn {
+        font-size: 11px !important;
+        /* Revert to smaller text */
+        padding: 6px 10px !important;
+        /* Revert to smaller button */
+        right: 4px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 12px rgba(255, 69, 0, 0.5) !important;
+    }
+}
+
+/* FIELDS */
+.mf-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mf-field label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-label);
+}
+
+.mf-calc input[type="text"],
+.mf-calc input[type="number"],
+.mf-calc select.input-category,
+.mf-calc select.input-weight {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 0 !important;
+    /* Bloqueia margens externas (WordPress fix) */
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    width: 100%;
+    max-width: 100% !important;
+    transition: all 0.25s ease;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+    /* Força repintura nativa de options no dark mode */
+    color-scheme: light dark;
+}
+
+/* WordPress Anti-Conflict para Setas (Spin Buttons) Pretas */
+.mf-calc input[type="number"] {
+    -moz-appearance: textfield !important;
+    appearance: none !important;
+}
+
+.mf-calc input[type="number"]::-webkit-outer-spin-button,
+.mf-calc input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    margin: 0 !important;
+    display: none !important;
+}
+
+.mf-calc select.input-category option,
+.mf-calc select.input-weight option {
+    background: var(--bg-card);
+    color: var(--text);
+}
+
+.mf-calc input:focus,
+.mf-calc select.input-category:focus,
+.mf-calc select.input-weight:focus {
+    outline: none;
+    border-color: var(--border-focus) !important;
+    box-shadow: 0 0 0 3px var(--primary-light), inset 0 1px 2px rgba(0, 0, 0, 0.02);
+    transform: translateY(-1px);
+}
+
+.mf-calc input:disabled {
+    background: var(--border) !important;
+    color: var(--text) !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* ACTIONS BAR */
+.mf-actions-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/* TOGGLE SWITCH */
+.toggle-advanced {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    user-select: none;
+}
+
+.toggle-advanced input {
+    display: none;
+}
+
+.toggle-slider {
+    width: 44px;
+    height: 24px;
+    background: var(--border);
+    border-radius: 12px;
+    position: relative;
+    transition: 0.3s;
+}
+
+.toggle-slider::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: 0.3s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-advanced input:checked+.toggle-slider {
+    background: var(--success);
+}
+
+.toggle-advanced input:checked+.toggle-slider::before {
+    transform: translateX(20px);
+}
+
+/* EXPORT BUTTON */
+.btn-export {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-export:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* ADVANCED VISIBILITY */
+.mf-advanced {
+    display: none !important;
+}
+
+.mf-calc.advanced .mf-advanced {
+    display: flex !important;
+}
+
+/* Exceptions for specific elements */
+.mf-calc.advanced .mf-field.mf-advanced {
+    display: flex !important;
+}
+
+.mf-calc.advanced .btn-remove.mf-advanced,
+.mf-calc.advanced .btn-nerds.mf-advanced {
+    display: flex !important;
+}
+
+/* PRODUCT SECTION */
+.mf-product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.mf-product-header h2 {
+    margin-bottom: 0;
+}
+
+.btn-add {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(238, 77, 45, 0.25);
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(238, 77, 45, 0.4);
+}
+
+/* PRODUCTS CONTAINER */
+#products-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* PRODUCT CARD */
+.product-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.product-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+}
+
+/* Botão Remover - canto superior direito (agora flutuando por fora) */
+.product-card>.btn-remove {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+}
+
+.product-card>.btn-remove:hover {
+    background: var(--danger-gradient);
+    color: white;
+    border-color: transparent;
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* CARD LAYOUT - Two Columns */
+.card-layout {
+    display: flex;
+    gap: 20px;
+}
+
+/* LEFT: Inputs Section */
+.inputs-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.inputs-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.inputs-row .mf-field {
+    flex: 1 1 150px;
+}
+
+/* RIGHT: Results Section - Vertical Stack */
+.results-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 0 0 35%;
+}
+
+.result-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 12px;
+    flex: 1;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+}
+
+.result-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.result-box * {
+    z-index: 1;
+}
+
+.result-box label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.result-box input {
+    font-size: 38px !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-shadow: none !important;
+}
+
+.result-box input:focus {
+    outline: none;
+}
+
+/* Price Box */
+.result-price {
+    background: var(--bg-card);
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow-glow);
+}
+
+.result-price::before {
+    background: var(--primary-gradient);
+}
+
+.result-price label {
+    color: var(--primary);
+}
+
+.mf-calc .result-price input,
+.mf-calc .result-price input:disabled {
+    background: var(--primary-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+/* Profit Box */
+.result-profit {
+    background: var(--bg-card);
+    border-color: var(--success-light);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+.result-profit::before {
+    background: var(--success-gradient);
+}
+
+.result-profit label {
+    color: var(--success);
+}
+
+.mf-calc .result-profit input,
+.mf-calc .result-profit input:disabled {
+    background: var(--success-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+/* ROI Box */
+.result-roi {
+    background: var(--bg-card);
+    border-color: rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+}
+
+.result-roi::before {
+    background: var(--roi-gradient);
+}
+
+.result-roi label {
+    color: var(--roi);
+}
+
+.mf-calc .result-roi input,
+.mf-calc .result-roi input:disabled {
+    background: var(--roi-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+/* FIELD SIZES */
+.field-sku {
+    min-width: 90px;
+    flex: 1;
+}
+
+.field-cost {
+    min-width: 120px;
+    flex: 1;
+}
+
+.field-margin {
+    flex: 1;
+    min-width: 180px;
+}
+
+/* DESTAQUE PREÇO E LUCRO */
+.field-price,
+.field-profit {
+    flex: 1;
+    min-width: 140px;
+}
+
+.field-price label,
+.field-profit label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.field-price input,
+.field-profit input {
+    font-weight: 800;
+    font-size: 30px;
+    text-align: center;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 2px solid;
+    width: 100%;
+}
+
+.field-price input {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary-light), #fff);
+    box-shadow: 0 4px 20px rgba(238, 77, 45, 0.25);
+}
+
+.field-price input:focus {
+    box-shadow: 0 4px 25px rgba(238, 77, 45, 0.4);
+    transform: scale(1.02);
+}
+
+.field-profit input {
+    color: var(--success);
+    border-color: var(--success);
+    background: linear-gradient(135deg, var(--success-light), #fff);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.25);
+}
+
+.field-profit input:focus {
+    box-shadow: 0 4px 25px rgba(16, 185, 129, 0.4);
+    transform: scale(1.02);
+}
+
+/* Em modo avançado, reduzir destaque */
+.mf-calc.advanced .field-price input,
+.mf-calc.advanced .field-profit input {
+    font-size: 15px;
+    padding: 10px 12px;
+    box-shadow: none;
+    background: var(--bg-input);
+    border-width: 1px;
+}
+
+.field-roi {
+    width: 70px;
+}
+
+/* Botão Gráfico/Nerds */
+.btn-nerds {
+    width: 100%;
+    margin-top: 16px;
+    height: 44px;
+    border: 1px dashed var(--border-focus);
+    background: transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+}
+
+.btn-nerds:hover {
+    background: var(--bg-input);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(238, 77, 45, 0.15);
+}
+
+/* COMPACT FIELDS */
+.product-row .mf-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 70px;
+}
+
+.product-row .mf-field label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.product-row input[type="text"],
+.product-row input[type="number"] {
+    padding: 10px 12px;
+    font-size: 15px;
+}
+
+/* MARGIN INLINE */
+.margin-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.margin-inline input[type="range"] {
+    flex: 1;
+    height: 4px;
+}
+
+.margin-inline input[type="number"] {
+    width: 75px !important;
+    text-align: center;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+}
+
+/* BUTTONS */
+.btn-remove {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    border-radius: 6px;
+    font-size: 16px;
+    color: var(--text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.btn-remove:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+/* NERDS ROW */
+.nerds-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+}
+
+.nerd-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nerd-item span {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.nerd-item strong {
+    font-size: 12px;
+    font-family: monospace;
+}
+
+.mf-hidden {
+    display: none !important;
+}
+
+/* =========================================
+   RECOMMENDATIONS WARNING (MARKETFACIL)
+   ========================================= */
+.mf-calc.recommendations-active .mf-warning input,
+.mf-calc.recommendations-active .mf-warning select {
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    background-color: rgba(239, 68, 68, 0.05) !important;
+    box-shadow: 0 0 0 1px var(--danger) inset !important;
+}
+
+.mf-calc.recommendations-active .result-box.mf-warning {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2) !important;
+}
+
+.mf-calc.recommendations-active .result-box.mf-warning::before {
+    background: var(--danger-gradient) !important;
+}
+
+.mf-calc.recommendations-active .result-box.mf-warning label {
+    color: var(--danger) !important;
+}
+
+.mf-calc.recommendations-active .result-box.mf-warning input {
+    color: var(--danger) !important;
+    background: var(--danger-gradient) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* =========================================
+   RECOMMENDATIONS HEALTHY (MARKETFACIL)
+   ========================================= */
+.mf-calc.recommendations-active .mf-healthy input,
+.mf-calc.recommendations-active .mf-healthy select {
+    border: 2px solid var(--success) !important;
+    color: var(--success) !important;
+    background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+.mf-calc.recommendations-active .result-box.mf-healthy {
+    border-color: var(--success) !important;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* =========================================
+   RESPONSIVIDADE (TABLETS E CELULARES)
+   ========================================= */
+
+@media (max-width: 1024px) {
+
+    /* TABLET: Coloca os resultados embaixo dos inputs, mas lado a lado */
+    .card-layout {
+        flex-direction: column;
+    }
+
+    .results-section {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .result-box {
+        flex: 1;
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* CELULAR GRANDE: Empilha todos os inputs para não amassar fontes */
+    .mf-calc {
+        padding: 20px 15px;
+    }
+
+    .mf-header h1 {
+        font-size: 24px;
+    }
+
+    .inputs-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .mf-grid-2,
+    .mf-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Libera a largura das caixas, permitindo ocupar 100% da tela */
+    .field-sku,
+    .field-cost,
+    .field-margin,
+    .field-contrib {
+        min-width: 100%;
+        width: 100%;
+    }
+
+    .nerds-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =========================================
+   ADS FÁCIL CTA & MODAL
+   ========================================= */
+
+.tacos-input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.tacos-input-wrapper input.input-tacos {
+    width: 100% !important;
+    padding-right: 110px !important;
+    /* Remove arrows (redundante por conta do global, mas garante) */
+    -moz-appearance: textfield !important;
+    appearance: textfield !important;
+}
+
+.ads-cta-btn {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #ff4500, #ff8c00);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255, 69, 0, 0.4);
+    animation: pulse-fire 2s infinite;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    z-index: 5;
+}
+
+.ads-cta-btn:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 69, 0, 0.6);
+}
+
+@keyframes pulse-fire {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7);
+        transform: translateY(-50%) scale(1);
+    }
+
+    20% {
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(255, 69, 0, 0);
+        transform: translateY(-50%) scale(1);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 69, 0, 0);
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+.mf-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mf-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.mf-modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 95%;
+    /* Responsive width */
+    max-width: 600px;
+    /* Wider modal */
+    padding: 40px;
+    max-height: 90vh;
+    /* Prevent overflowing screen height */
+    overflow-y: auto;
+    /* Scroll inside modal if needed */
+    box-sizing: border-box;
+    /* Prevent padding from breaking width */
+    /* More breathing room */
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mf-modal-overlay.active .mf-modal-content {
+    transform: translateY(0);
+}
+
+.mf-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.mf-modal-close:hover {
+    color: var(--danger);
+}
+
+.mf-modal-header h3 {
+    font-size: 28px;
+    /* Larger title */
+    font-weight: 800;
+    margin-bottom: 20px;
+    font-family: 'Outfit', sans-serif;
+    text-align: center;
+    /* Center title */
+}
+
+.mf-modal-header h3 span {
+    background: linear-gradient(135deg, #ff4500, #ff8c00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.mf-modal-body p {
+    font-size: 18px;
+    /* Texto maior para melhor leitura */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* Match Hotmart serif style */
+    color: var(--text);
+    margin-bottom: 24px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.mf-modal-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mf-modal-highlight-box {
+    background: rgba(255, 69, 0, 0.04);
+    border: 1px dashed rgba(255, 100, 0, 0.6);
+    /* Stronger orange dash like Hotmart */
+    border-radius: 8px;
+    /* Slightly sharper corners like Hotmart */
+    padding: 24px;
+    /* Reduced from 28px for mobile */
+    margin: 0 auto 32px auto;
+    width: 100%;
+    /* Better for mobile */
+    max-width: 500px;
+}
+
+.mf-modal-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    width: fit-content;
+    /* Centers the whole block of left-aligned items */
+}
+
+.mf-modal-benefits li {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* Serif for list too */
+    font-size: 17px;
+    /* Aumentado de 15px para 17px */
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.mf-modal-benefits li:last-child {
+    margin-bottom: 0;
+}
+
+.hotmart-check {
+    color: #5d36b8;
+    /* Rich purple color from Hotmart mockups */
+    font-size: 16px;
+    font-weight: 900;
+    font-family: sans-serif;
+    /* Keep checkmark sans-serif so it shows up cleanly */
+    margin-top: 1px;
+}
+
+.mf-modal-cta {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    /* Prevent padding from breaking width */
+    text-align: center;
+    padding: 16px;
+    /* Bigger button */
+    background: linear-gradient(135deg, #ff4500, #ff8c00);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    /* Smoother curve */
+    font-weight: 700;
+    font-size: 18px;
+    /* Larger font */
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mf-modal-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 69, 0, 0.5);
+    color: white;
+    /* Ensure text stays white */
+}
+
+@media (max-width: 480px) {
+
+    /* CELULAR PEQUENO: Diminui fonte de resultado e alinha Header */
+    .result-box input {
+        font-size: 28px;
+        /* Ajuste para não transbordar números GIGANTES */
+        padding: 10px;
+    }
+
+    .results-section {
+        flex-direction: column;
+        /* Resultados voltam a ficar um embaixo do outro no iPhone pequeno */
+    }
+
+    .mf-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .btn-theme {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+    }
+}
