@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Preços para Mercado Livre</title>
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <title>Calculadora de Preços para Mercado Livre (TEST)</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -53,7 +53,7 @@
                 Modo Avançado
             </label>
             <label class="toggle-advanced"
-                title="Destacar em vermelho os campos que não atingem a meta ideal (Custo Op abaixo de 10%, Contribuição acima de 20%, Lucro acima de 10%)">
+                title="Destacar campos que não atingem a meta ideal (Custo Op ≤ 10%, Contribuição ≥ 20%, Lucro ≥ 10%, ROI ≥ 20%)">
                 <input type="checkbox" id="recommendations-mode">
                 <span class="toggle-slider"></span>
                 Recomendações Marketfacil
@@ -144,8 +144,8 @@
                                 <option value="custom">Personalizado (Digitar valor)</option>
                             </select>
                         </div>
-                        <div class="mf-field" title="Peso do pacote completo para cotação do Mercado Envios">
-                            <label>Peso da Caixa</label>
+                        <div class="mf-field" title="Peso do pacote. Se preencher as dimensões, o ML usará o maior entre peso real e cubado.">
+                            <label>Peso</label>
                             <select class="input-weight">
                                 <option value="weight_0.3">Até 300g</option>
                                 <option value="weight_0.5">300g a 500g</option>
@@ -288,7 +288,7 @@
     </div>
 
     <!-- MAIN SCRIPT -->
-    <script src="js/calc-mercado-livre.js"></script>
+    <script src="calc-mercado-livre.js"></script>
 </body>
 
 </html>
