@@ -754,7 +754,7 @@ class Product {
             this.marginLabel.textContent = enabled ? 'Margem de Lucro (%)' : 'Margem de Contribuição (%)';
         }
         if (this.profitLabel) {
-            this.profitLabel.textContent = enabled ? '✅ LUCRO' : '🟡 CONTRIBUIÇÃO (R$)';
+            this.profitLabel.textContent = enabled ? '✅ LUCRO' : '🟡 SOBRA DA VENDA (R$)';
         }
         if (this.fieldMargin) {
             this.fieldMargin.title = enabled
@@ -764,7 +764,7 @@ class Product {
         if (this.profitBox) {
             this.profitBox.title = enabled
                 ? 'Lucro Líquido final na venda desta unidade (Pode ser alterado para inverter o cálculo)'
-                : 'Margem de contribuição em R$ desta unidade: o que sobra após os custos variáveis (ainda precisa pagar os custos fixos)';
+                : 'O que sobra desta venda após os custos variáveis. Ainda precisa pagar seus custos fixos antes de virar lucro (margem de contribuição).';
         }
         // ROI honesto: no Custeio Variável ele é retorno sobre a contribuição, não sobre o lucro
         if (this.roiLabel) {
