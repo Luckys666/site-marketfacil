@@ -656,6 +656,37 @@ body {
     color: transparent !important;
 }
 
+/* Selo do método de custeio */
+.costing-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    vertical-align: middle;
+    margin-left: 8px;
+    border: 1px solid;
+}
+
+/* Selo do método (muda com o custo operacional) */
+.costing-badge-costing {
+    background: var(--success-light);
+    color: var(--success);
+    border-color: var(--success);
+}
+
+.mf-calc.variable-costing .costing-badge-costing {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Sem custo operacional: campo não aplicado no preço */
+.mf-calc.variable-costing #global-op-cost {
+    opacity: 0.4;
+    text-decoration: line-through;
+}
+
 /* FIELD SIZES */
 .field-sku {
     min-width: 90px;

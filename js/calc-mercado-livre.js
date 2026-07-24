@@ -209,10 +209,12 @@ class Calculator {
         this.template = document.getElementById('product-template');
 
         // Global inputs
-        this.globalRevenue = document.getElementById('global-revenue');
-        this.globalFixedCost = document.getElementById('global-fixed-cost');
         this.globalTax = document.getElementById('global-tax');
         this.globalOpCost = document.getElementById('global-op-cost');
+
+        // Método de custeio (custo operacional opcional)
+        this.opCostMode = document.getElementById('op-cost-mode');
+        this.costingBadge = document.getElementById('costing-treatment-badge');
 
         this.init();
     }
@@ -247,14 +249,38 @@ class Calculator {
         document.getElementById('btn-export').addEventListener('click', () => this.exportCSV());
 
         // Global inputs
-        [this.globalRevenue, this.globalFixedCost, this.globalTax].forEach(el => {
-            el.addEventListener('input', () => {
+        [this.globalTax, this.globalOpCost].forEach(el => {
+            if (el) el.addEventListener('input', () => {
                 this.updateOpCost();
                 this.recalculateAll();
             });
         });
 
+        // Custo operacional opcional: Custeio por Absorção (ligado) x Custeio Variável (desligado)
+        if (this.opCostMode) {
+            this.opCostMode.addEventListener('change', () => this.applyCostingMode());
+        }
+
+        this.applyCostingMode();
+    }
+
+    isOpCostEnabled() {
+        return this.opCostMode ? this.opCostMode.checked : true;
+    }
+
+    applyCostingMode() {
+        const enabled = this.isOpCostEnabled();
+        const calcEl = document.querySelector('.mf-calc');
+        if (calcEl) calcEl.classList.toggle('variable-costing', !enabled);
+        // Sem o custo operacional o campo não é usado: trava para edição
+        if (this.globalOpCost) this.globalOpCost.disabled = !enabled;
+        // Selo do método (muda com o toggle). Pleno (RKW) rateia custos+despesas; Variável não (margem de contribuição).
+        if (this.costingBadge) {
+            this.costingBadge.textContent = enabled ? 'Custeio Pleno (RKW)' : 'Custeio Variável · margem de contribuição';
+        }
+        this.products.forEach(p => p.applyCostingMode(enabled));
         this.updateOpCost();
+        this.recalculateAll();
     }
 
     exportCSV() {
@@ -299,14 +325,13 @@ class Calculator {
         }
     }
 
-    getGlobalRevenue() { return parseFloat(this.globalRevenue.value) || 0; }
-    getGlobalFixedCost() { return parseFloat(this.globalFixedCost.value) || 0; }
     getGlobalTaxRate() { return (parseFloat(this.globalTax.value) || 0) / 100; }
 
     getOpCostRate() {
-        const rev = this.getGlobalRevenue();
-        const fixed = this.getGlobalFixedCost();
-        return rev > 0 ? fixed / rev : 0;
+        // Custeio Variável: o custo operacional não entra no preço
+        if (!this.isOpCostEnabled()) return 0;
+        // O usuário digita o % direto (ex: 10 => 0.10)
+        return this.parse(this.globalOpCost.value) / 100;
     }
 
     recalculateAll() {
@@ -314,10 +339,8 @@ class Calculator {
     }
 
     updateOpCost() {
-        const rate = this.getOpCostRate() * 100;
-        this.globalOpCost.value = this.fmtPerc(rate);
-
-        // Marketfacil recommendation: Op Cost <= 10%
+        // O usuário digita o % direto. Recomendação Marketfacil: Custo Operacional <= 10%
+        const rate = this.parse(this.globalOpCost.value); // já em %
         if (rate > 10.01) {
             this.globalOpCost.parentElement.classList.add('mf-warning');
             this.globalOpCost.parentElement.classList.remove('mf-healthy');
@@ -334,6 +357,7 @@ class Calculator {
 
         const product = new Product(card, this);
         this.products.push(product);
+        product.applyCostingMode(this.isOpCostEnabled());
     }
 
     removeProduct(product) {
@@ -390,6 +414,15 @@ class Product {
         this.cubadoInfo = element.querySelector('.cubado-info');
         this.cubadoValue = element.querySelector('.cubado-value');
         this.cubadoStatus = element.querySelector('.cubado-status');
+
+        // Rótulos dinâmicos e ponto de equilíbrio (método de custeio)
+        this.marginLabel = element.querySelector('.margin-label');
+        this.profitLabel = element.querySelector('.profit-label');
+        this.fieldMargin = element.querySelector('.field-margin');
+        this.fieldContrib = element.querySelector('.field-contrib');
+        this.profitBox = element.querySelector('.result-profit');
+        this.roiLabel = element.querySelector('.roi-label');
+        this.roiBox = element.querySelector('.result-roi');
 
         // Outputs
         this.outputContrib = element.querySelector('.output-contrib');
@@ -683,8 +716,9 @@ class Product {
             this.outputContrib.parentElement.classList.add('mf-healthy');
         }
 
-        // Profit Margin >= 10%
-        if (marginRate < 0.0999) {
+        // Meta de margem Marketfacil: >= 20% (tanto o lucro, com custo operacional, quanto a contribuição, sem)
+        const marginThreshold = 0.1999;
+        if (marginRate < marginThreshold) {
             this.inputProfit.closest('.result-box').classList.add('mf-warning');
             this.inputMargin.closest('.mf-field').classList.add('mf-warning');
             this.inputProfit.closest('.result-box').classList.remove('mf-healthy');
@@ -712,6 +746,41 @@ class Product {
             this.inputMargin.value = v;
         }
         this.inputMarginSlider.value = v;
+    }
+
+    // Troca rótulos e método conforme o custo operacional estar ligado (Absorção) ou desligado (Variável)
+    applyCostingMode(enabled) {
+        if (this.marginLabel) {
+            this.marginLabel.textContent = enabled ? 'Margem de Lucro (%)' : 'Margem de Contribuição (%)';
+        }
+        if (this.profitLabel) {
+            this.profitLabel.textContent = enabled ? '✅ LUCRO' : '🟡 CONTRIBUIÇÃO (R$)';
+        }
+        if (this.fieldMargin) {
+            this.fieldMargin.title = enabled
+                ? 'Margem de lucro líquido desejada sobre o faturamento'
+                : 'Margem de contribuição desejada: o que sobra após os custos variáveis para pagar os custos fixos e gerar lucro';
+        }
+        if (this.profitBox) {
+            this.profitBox.title = enabled
+                ? 'Lucro Líquido final na venda desta unidade (Pode ser alterado para inverter o cálculo)'
+                : 'Margem de contribuição em R$ desta unidade: o que sobra após os custos variáveis (ainda precisa pagar os custos fixos)';
+        }
+        // ROI honesto: no Custeio Variável ele é retorno sobre a contribuição, não sobre o lucro
+        if (this.roiLabel) {
+            this.roiLabel.textContent = enabled ? '📈 ROI (%)' : '📈 RETORNO S/ CUSTO (%)';
+        }
+        if (this.roiBox) {
+            this.roiBox.title = enabled
+                ? 'Retorno sobre o Investimento - Lucro / Custo do Produto (Pode ser alterado para achar o Preço via ROI)'
+                : 'Quanto cada R$1 gasto no produto retorna de contribuição (antes de pagar os custos fixos). Não é lucro final.';
+        }
+        // Em Custeio Variável o output "Margem de Contribuição" fica redundante com o input,
+        // então escondemos para não duplicar a informação.
+        if (this.fieldContrib) {
+            this.fieldContrib.classList.toggle('mf-hidden', !enabled);
+        }
+        this.calculate('margin');
     }
 }
 
