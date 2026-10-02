@@ -97,8 +97,8 @@ new_product_class = """class Product {
         let fixedFee = 0;
         
         if (price < 8) fixedFee = price * 0.50;
-        else if (price < 12) fixedFee = 4.00 + (price * 0.05);
-        else if (price < 80) fixedFee = 4.00;
+        else if (price < 12) fixedFee = 4.50 + (price * 0.05);
+        else if (price < 80) fixedFee = 4.50;
         else if (price < 100) fixedFee = 16.00;
         else if (price < 200) fixedFee = 20.00;
         else fixedFee = 26.00;
